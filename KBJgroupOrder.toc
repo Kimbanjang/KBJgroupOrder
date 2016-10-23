@@ -1,0 +1,9 @@
+## Interface: 70000
+## Title: KBJ Group Order
+## Version: 0.5
+## Author: Kimbanjang
+## Notes: Create Order Button for Group Control
+## SavedVariables:
+
+KBJgroupOrderData.lua
+KBJgroupOrder.lua
