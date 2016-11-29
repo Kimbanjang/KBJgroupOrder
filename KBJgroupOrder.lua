@@ -12,27 +12,38 @@ local GroupOrder_Type = 0
 ---
 
 local function OnClick_btnPull(self)
+    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 3")
     SendChatMessage("Pulling after 3s!", "SAY")
 end
 
 local function OnClick_btnCallLust(self)
     SendChatMessage("Lust!!!", "SAY")
+    SendChatMessage("Lust!!!", "SAY")
+    SendChatMessage("Lust!!!", "SAY")
 end
 
 local function OnClick_btnWaitHere(self)
-    SendChatMessage("Wait on Blue{네모} for LOS", "SAY") 
+    SendChatMessage("Wait on Blue{네모} for LOS", "SAY")
+    SendChatMessage("Wait on Blue{네모} for LOS", "SAY")
+    SendChatMessage("Wait on Blue{네모} for LOS", "SAY")
 end
 
 local function OnClick_btnMove(self)
-    SendChatMessage("Follow Orange{동그라미}", "SAY") 
+    SendChatMessage("Follow Orange{동그라미}", "SAY")
+    SendChatMessage("Follow Orange{동그라미}", "SAY")
+    SendChatMessage("Follow Orange{동그라미}", "SAY")
 end
 
 local function OnClick_btnStack(self)
-    SendChatMessage("Stack on Orange{동그라미}", "SAY") 
+    SendChatMessage("Stack on Orange{동그라미}", "SAY")
+    SendChatMessage("Stack on Orange{동그라미}", "SAY")
+    SendChatMessage("Stack on Orange{동그라미}", "SAY")
 end
 
 local function OnClick_btnBack(self)
-    SendChatMessage("Stay Back!!", "SAY") 
+    SendChatMessage("Stay Back!!", "SAY")
+    SendChatMessage("Stay Back!!", "SAY")
+    SendChatMessage("Stay Back!!", "SAY")
 end
 
 local function OnClick_btnSelect(self)
@@ -91,19 +102,26 @@ btnPull:SetScript("OnClick", OnClick_btnPull)
 local btnCallHero = CreateFrame('Button', 'btnCallLust', mainFrame, 'OptionsButtonTemplate')
 btnCallLust:SetSize(100, 22)
 btnCallLust:SetPoint('TOP', btnPull, 'BOTTOM', 0, -2)
-btnCallLust:SetText("웅심 써")
+btnCallLust:SetText("영웅심!")
 btnCallLust:SetScript("OnClick", OnClick_btnCallLust)
 
+local btnWaitHereMark = CreateFrame('Button', 'btnWaitHereMark', mainFrame, 'SecureActionButtonTemplate, OptionsButtonTemplate')
+btnWaitHereMark:SetSize(22, 22)
+btnWaitHereMark:SetPoint('TOPLEFT', btnCallLust, 'BOTTOMLEFT', 0, -8)        
+btnWaitHereMark:SetText("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:12:12|t")
+btnWaitHereMark:SetAttribute("type", "macro")
+btnWaitHereMark:SetAttribute("macrotext", "/wm 1")
+
 local btnWaitHere = CreateFrame('Button', 'btnWaitHere', mainFrame, 'OptionsButtonTemplate')
-btnWaitHere:SetSize(100, 22)
-btnWaitHere:SetPoint('TOP', btnCallLust, 'BOTTOM', 0, -8)        
-btnWaitHere:SetText("블루에서 기다려")
-btnWaitHere:SetScript("OnClick", OnClick_btnWaitHere) 
+btnWaitHere:SetSize(77, 22)
+btnWaitHere:SetPoint('LEFT', btnWaitHereMark, 'RIGHT', 1, 0)        
+btnWaitHere:SetText("에서 기다려")
+btnWaitHere:SetScript("OnClick", OnClick_btnWaitHere)
 
 local btnMove = CreateFrame('Button', 'btnMove', mainFrame, 'OptionsButtonTemplate')
 btnMove:SetSize(100, 22)
-btnMove:SetPoint('TOP', btnWaitHere, 'BOTTOM', 0, -2)        
-btnMove:SetText("오렌지 따라와")
+btnMove:SetPoint('TOPLEFT', btnWaitHereMark, 'BOTTOMLEFT', 0, -2)        
+btnMove:SetText("오렌지를 따라와")
 btnMove:SetScript("OnClick", OnClick_btnMove)
 
 local btnStack = CreateFrame('Button', 'btnStack', mainFrame, 'OptionsButtonTemplate')
@@ -121,7 +139,7 @@ btnBack:SetScript("OnClick", OnClick_btnBack)
 local btnSelect = CreateFrame('Button', 'btnSelect', mainFrame, 'OptionsButtonTemplate')
 btnSelect:SetSize(100, 22)
 btnSelect:SetPoint('TOP', btnBack, 'BOTTOM', 0, -8)
-btnSelect:SetText("브리핑 메뉴")
+btnSelect:SetText("브리핑 세트")
 btnSelect:SetScript("OnClick", OnClick_btnSelect)
 
 ---
