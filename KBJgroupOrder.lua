@@ -3,6 +3,9 @@ local position_REF = 'CENTER'
 local position_X = 500
 local position_Y = 46
 local position_Align = 'TOP'
+
+local chatRepeat = 3 -- 알림챗 반복 횟수
+local chatType = "SAY" -- 말하기 = SAY / 외치기 = YELL / 파티 = PARTY / 인스턴스 = INSTANCE
 -- /Config
 
 ---
@@ -11,42 +14,64 @@ local GroupOrder_Type = 0
 
 ---
 
-local function OnClick_btnPull(self)
+function PullingChat(timer)
+    SendChatMessage("Pulling after "..timer.."s!", chatType)
+    C_Timer.NewTicker(1, (function()
+        if timer > 1 then
+            timer = timer - 1
+            SendChatMessage(timer.."s!", chatType)
+        else
+            SendChatMessage("Pulling!!", chatType)
+        end
+    end), timer)
+end
+
+local OnClick_btnPullA = function(self)
     MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 3")
-    SendChatMessage("Pulling after 3s!", "SAY")
+    PullingChat(3)
 end
 
-local function OnClick_btnCallLust(self)
-    SendChatMessage("Lust!!!", "SAY")
-    SendChatMessage("Lust!!!", "SAY")
-    SendChatMessage("Lust!!!", "SAY")
+local OnClick_btnPullB = function(self)
+    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 5")
+    PullingChat(5)
 end
 
-local function OnClick_btnWaitHere(self)
-    SendChatMessage("Wait on Blue{네모} for LOS", "SAY")
-    SendChatMessage("Wait on Blue{네모} for LOS", "SAY")
-    SendChatMessage("Wait on Blue{네모} for LOS", "SAY")
+local OnClick_btnPullC = function(self)
+    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 12")
+    PullingChat(12)
 end
 
-local function OnClick_btnMove(self)
-    SendChatMessage("Follow Orange{동그라미}", "SAY")
-    SendChatMessage("Follow Orange{동그라미}", "SAY")
-    SendChatMessage("Follow Orange{동그라미}", "SAY")
+local OnClick_btnCallLust = function(self)
+    for i=1, chatRepeat do
+        SendChatMessage("Lust!!!", chatType)
+    end
 end
 
-local function OnClick_btnStack(self)
-    SendChatMessage("Stack on Orange{동그라미}", "SAY")
-    SendChatMessage("Stack on Orange{동그라미}", "SAY")
-    SendChatMessage("Stack on Orange{동그라미}", "SAY")
+local OnClick_btnWaitHere = function(self)
+    for i=1, chatRepeat do
+        SendChatMessage("Wait on Blue{네모} for LOS", chatType)
+    end
 end
 
-local function OnClick_btnBack(self)
-    SendChatMessage("Stay Back!!", "SAY")
-    SendChatMessage("Stay Back!!", "SAY")
-    SendChatMessage("Stay Back!!", "SAY")
+local OnClick_btnMove = function(self)
+    for i=1, chatRepeat do
+        SendChatMessage("Follow Orange{동그라미}", chatType)
+    end
 end
 
-local function OnClick_btnSelect(self)
+local OnClick_btnStack = function(self)
+    for i=1, chatRepeat do
+        SendChatMessage("Stack on Orange{동그라미}", chatType)
+    end
+end
+
+local OnClick_btnBack = function(self)
+    for i=1, chatRepeat do
+        SendChatMessage("Stay Back!!", chatType)
+    end
+end
+
+local OnClick_btnSelect = function(self)
     KBJGroupOrder_Instance:Hide()
     KBJGroupOrder_Raid:Hide()
 
@@ -75,13 +100,13 @@ local function OnClick_btnSelect(self)
     end
 end
 
-local function OnClick_selectTypeInstance(self)
+local OnClick_selectTypeInstance = function(self)
     KBJGroupOrder_Type:Hide()
     KBJGroupOrder_Instance:Show()
     GroupOrder_Type = 0
 end
 
-local function OnClick_selectTypeRaid(self)
+local OnClick_selectTypeRaid = function(self)
     KBJGroupOrder_Type:Hide()
     KBJGroupOrder_Raid:Show()      
     GroupOrder_Type = 0
@@ -93,46 +118,58 @@ local mainFrame = CreateFrame('Frame', 'KBJGroupOrder', UIParent)
 mainFrame:SetSize(100, 178)
 mainFrame:SetPoint(position_Align, UIParent, position_REF, position_X, position_Y)
 
-local btnPull = CreateFrame('Button', 'btnPull', mainFrame, 'OptionsButtonTemplate')
-btnPull:SetSize(100, 22)
-btnPull:SetPoint('TOP', mainFrame, 'TOP', 0, 0)
-btnPull:SetText("3초후 풀링")
-btnPull:SetScript("OnClick", OnClick_btnPull)
+local btnPullA = CreateFrame('Button', 'btnPullA', mainFrame, 'OptionsButtonTemplate')
+btnPullA:SetSize(48, 22)
+btnPullA:SetPoint('TOPLEFT', mainFrame, 'TOPLEFT', 0, 0)
+btnPullA:SetText("3초 풀")
+btnPullA:SetScript("OnClick", OnClick_btnPullA)
+
+local btnPullB = CreateFrame('Button', 'btnPullB', mainFrame, 'OptionsButtonTemplate')
+btnPullB:SetSize(25, 22)
+btnPullB:SetPoint('LEFT', btnPullA, 'RIGHT', 1, 0)
+btnPullB:SetText("5")
+btnPullB:SetScript("OnClick", OnClick_btnPullB)
+
+local btnPullC = CreateFrame('Button', 'btnPullC', mainFrame, 'OptionsButtonTemplate')
+btnPullC:SetSize(25, 22)
+btnPullC:SetPoint('LEFT', btnPullB, 'RIGHT', 1, 0)
+btnPullC:SetText("12")
+btnPullC:SetScript("OnClick", OnClick_btnPullC)
 
 local btnCallHero = CreateFrame('Button', 'btnCallLust', mainFrame, 'OptionsButtonTemplate')
 btnCallLust:SetSize(100, 22)
-btnCallLust:SetPoint('TOP', btnPull, 'BOTTOM', 0, -2)
+btnCallLust:SetPoint('TOPLEFT', btnPullA, 'BOTTOMLEFT', 0, -2)
 btnCallLust:SetText("영웅심!")
 btnCallLust:SetScript("OnClick", OnClick_btnCallLust)
 
 local btnWaitHereMark = CreateFrame('Button', 'btnWaitHereMark', mainFrame, 'SecureActionButtonTemplate, OptionsButtonTemplate')
 btnWaitHereMark:SetSize(22, 22)
-btnWaitHereMark:SetPoint('TOPLEFT', btnCallLust, 'BOTTOMLEFT', 0, -8)        
+btnWaitHereMark:SetPoint('TOPLEFT', btnCallLust, 'BOTTOMLEFT', 0, -8)
 btnWaitHereMark:SetText("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:12:12|t")
 btnWaitHereMark:SetAttribute("type", "macro")
 btnWaitHereMark:SetAttribute("macrotext", "/wm 1")
 
 local btnWaitHere = CreateFrame('Button', 'btnWaitHere', mainFrame, 'OptionsButtonTemplate')
 btnWaitHere:SetSize(77, 22)
-btnWaitHere:SetPoint('LEFT', btnWaitHereMark, 'RIGHT', 1, 0)        
+btnWaitHere:SetPoint('LEFT', btnWaitHereMark, 'RIGHT', 1, 0)
 btnWaitHere:SetText("에서 기다려")
 btnWaitHere:SetScript("OnClick", OnClick_btnWaitHere)
 
 local btnMove = CreateFrame('Button', 'btnMove', mainFrame, 'OptionsButtonTemplate')
 btnMove:SetSize(100, 22)
-btnMove:SetPoint('TOPLEFT', btnWaitHereMark, 'BOTTOMLEFT', 0, -2)        
+btnMove:SetPoint('TOPLEFT', btnWaitHereMark, 'BOTTOMLEFT', 0, -2)
 btnMove:SetText("오렌지를 따라와")
 btnMove:SetScript("OnClick", OnClick_btnMove)
 
 local btnStack = CreateFrame('Button', 'btnStack', mainFrame, 'OptionsButtonTemplate')
 btnStack:SetSize(100, 22)
-btnStack:SetPoint('TOP', btnMove, 'BOTTOM', 0, -2)        
+btnStack:SetPoint('TOP', btnMove, 'BOTTOM', 0, -2)
 btnStack:SetText("오렌지에게 모여")
 btnStack:SetScript("OnClick", OnClick_btnStack)
 
 local btnBack = CreateFrame('Button', 'btnBack', mainFrame, 'OptionsButtonTemplate')
 btnBack:SetSize(100, 22)
-btnBack:SetPoint('TOP', btnStack, 'BOTTOM', 0, -2)        
+btnBack:SetPoint('TOP', btnStack, 'BOTTOM', 0, -2)
 btnBack:SetText("물러서")
 btnBack:SetScript("OnClick", OnClick_btnBack)
 
@@ -206,7 +243,7 @@ for i = 1, #GroupOrderInstanceData["감시관의 금고"] do
     GroupOrderInstanceVoW[i] = CreateFrame('Button', 'GroupOrderInstanceVoW'..i, selectInstanceVoW, 'OptionsButtonTemplate')
     GroupOrderInstanceVoW[i]:SetSize(100, 22)
     GroupOrderInstanceVoW[i]:SetText(GroupOrderInstanceData["감시관의 금고"][i].name)
-    GroupOrderInstanceVoW[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["감시관의 금고"][i].msg) end)
+    GroupOrderInstanceVoW[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["감시관의 금고"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceVoW[i]:SetPoint('TOP', selectInstanceVoW, 'TOP', 0, 0)
     else GroupOrderInstanceVoW[i]:SetPoint('TOP', GroupOrderInstanceVoW[i-1], 'BOTTOM', 0, -2)
@@ -223,7 +260,7 @@ for i = 1, #GroupOrderInstanceData["검은 떼까마귀"] do
     GroupOrderInstanceBRH[i] = CreateFrame('Button', 'GroupOrderInstanceBRH'..i, selectInstanceBRH, 'OptionsButtonTemplate')
     GroupOrderInstanceBRH[i]:SetSize(100, 22)
     GroupOrderInstanceBRH[i]:SetText(GroupOrderInstanceData["검은 떼까마귀"][i].name)
-    GroupOrderInstanceBRH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["검은 떼까마귀"][i].msg) end)
+    GroupOrderInstanceBRH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["검은 떼까마귀"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceBRH[i]:SetPoint('TOP', selectInstanceBRH, 'TOP', 0, 0)
     else GroupOrderInstanceBRH[i]:SetPoint('TOP', GroupOrderInstanceBRH[i-1], 'BOTTOM', 0, -2)
@@ -240,7 +277,7 @@ for i = 1, #GroupOrderInstanceData["넬타리온의 둥지"] do
     GroupOrderInstanceNEL[i] = CreateFrame('Button', 'GroupOrderInstanceNEL'..i, selectInstanceNEL, 'OptionsButtonTemplate')
     GroupOrderInstanceNEL[i]:SetSize(100, 22)
     GroupOrderInstanceNEL[i]:SetText(GroupOrderInstanceData["넬타리온의 둥지"][i].name)
-    GroupOrderInstanceNEL[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["넬타리온의 둥지"][i].msg) end)
+    GroupOrderInstanceNEL[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["넬타리온의 둥지"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceNEL[i]:SetPoint('TOP', selectInstanceNEL, 'TOP', 0, 0)
     else GroupOrderInstanceNEL[i]:SetPoint('TOP', GroupOrderInstanceNEL[i-1], 'BOTTOM', 0, -2)
@@ -257,7 +294,7 @@ for i = 1, #GroupOrderInstanceData["별의 궁정"] do
     GroupOrderInstanceCoS[i] = CreateFrame('Button', 'GroupOrderInstanceCoS'..i, selectInstanceCoS, 'OptionsButtonTemplate')
     GroupOrderInstanceCoS[i]:SetSize(100, 22)
     GroupOrderInstanceCoS[i]:SetText(GroupOrderInstanceData["별의 궁정"][i].name)
-    GroupOrderInstanceCoS[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["별의 궁정"][i].msg) end)
+    GroupOrderInstanceCoS[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["별의 궁정"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceCoS[i]:SetPoint('TOP', selectInstanceCoS, 'TOP', 0, 0)
     else GroupOrderInstanceCoS[i]:SetPoint('TOP', GroupOrderInstanceCoS[i-1], 'BOTTOM', 0, -2)
@@ -274,7 +311,7 @@ for i = 1, #GroupOrderInstanceData["비전로"] do
     GroupOrderInstanceARC[i] = CreateFrame('Button', 'GroupOrderInstanceARC'..i, selectInstanceARC, 'OptionsButtonTemplate')
     GroupOrderInstanceARC[i]:SetSize(100, 22)
     GroupOrderInstanceARC[i]:SetText(GroupOrderInstanceData["비전로"][i].name)
-    GroupOrderInstanceARC[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["비전로"][i].msg) end)
+    GroupOrderInstanceARC[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["비전로"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceARC[i]:SetPoint('TOP', selectInstanceARC, 'TOP', 0, 0)
     else GroupOrderInstanceARC[i]:SetPoint('TOP', GroupOrderInstanceARC[i-1], 'BOTTOM', 0, -2)
@@ -291,7 +328,7 @@ for i = 1, #GroupOrderInstanceData["아즈샤라의 눈"] do
     GroupOrderInstanceEoA[i] = CreateFrame('Button', 'GroupOrderInstanceEoA'..i, selectInstanceEoA, 'OptionsButtonTemplate')
     GroupOrderInstanceEoA[i]:SetSize(100, 22)
     GroupOrderInstanceEoA[i]:SetText(GroupOrderInstanceData["아즈샤라의 눈"][i].name)
-    GroupOrderInstanceEoA[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["아즈샤라의 눈"][i].msg) end)
+    GroupOrderInstanceEoA[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["아즈샤라의 눈"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceEoA[i]:SetPoint('TOP', selectInstanceEoA, 'TOP', 0, 0)
     else GroupOrderInstanceEoA[i]:SetPoint('TOP', GroupOrderInstanceEoA[i-1], 'BOTTOM', 0, -2)
@@ -308,7 +345,7 @@ for i = 1, #GroupOrderInstanceData["어둠심장 숲"] do
     GroupOrderInstanceDHT[i] = CreateFrame('Button', 'GroupOrderInstanceDHT'..i, selectInstanceDHT, 'OptionsButtonTemplate')
     GroupOrderInstanceDHT[i]:SetSize(100, 22)
     GroupOrderInstanceDHT[i]:SetText(GroupOrderInstanceData["어둠심장 숲"][i].name)
-    GroupOrderInstanceDHT[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["어둠심장 숲"][i].msg) end)
+    GroupOrderInstanceDHT[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["어둠심장 숲"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceDHT[i]:SetPoint('TOP', selectInstanceDHT, 'TOP', 0, 0)
     else GroupOrderInstanceDHT[i]:SetPoint('TOP', GroupOrderInstanceDHT[i-1], 'BOTTOM', 0, -2)
@@ -325,7 +362,7 @@ for i = 1, #GroupOrderInstanceData["영혼의 아귀"] do
     GroupOrderInstanceMEW[i] = CreateFrame('Button', 'GroupOrderInstanceMEW'..i, selectInstanceMEW, 'OptionsButtonTemplate')
     GroupOrderInstanceMEW[i]:SetSize(100, 22)
     GroupOrderInstanceMEW[i]:SetText(GroupOrderInstanceData["영혼의 아귀"][i].name)
-    GroupOrderInstanceMEW[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["영혼의 아귀"][i].msg) end)
+    GroupOrderInstanceMEW[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["영혼의 아귀"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceMEW[i]:SetPoint('TOP', selectInstanceMEW, 'TOP', 0, 0)
     else GroupOrderInstanceMEW[i]:SetPoint('TOP', GroupOrderInstanceMEW[i-1], 'BOTTOM', 0, -2)
@@ -342,7 +379,7 @@ for i = 1, #GroupOrderInstanceData["용맹의 전당"] do
     GroupOrderInstanceVoH[i] = CreateFrame('Button', 'GroupOrderInstanceVoH'..i, selectInstanceVoH, 'OptionsButtonTemplate')
     GroupOrderInstanceVoH[i]:SetSize(100, 22)
     GroupOrderInstanceVoH[i]:SetText(GroupOrderInstanceData["용맹의 전당"][i].name)
-    GroupOrderInstanceVoH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["용맹의 전당"][i].msg) end)
+    GroupOrderInstanceVoH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["용맹의 전당"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceVoH[i]:SetPoint('TOP', selectInstanceVoH, 'TOP', 0, 0)
     else GroupOrderInstanceVoH[i]:SetPoint('TOP', GroupOrderInstanceVoH[i-1], 'BOTTOM', 0, -2)
@@ -359,7 +396,7 @@ for i = 1, #GroupOrderInstanceData["카라잔 올클리어"] do
     GroupOrderInstanceKAA[i] = CreateFrame('Button', 'GroupOrderInstanceKAA'..i, selectInstanceKAA, 'OptionsButtonTemplate')
     GroupOrderInstanceKAA[i]:SetSize(100, 22)
     GroupOrderInstanceKAA[i]:SetText(GroupOrderInstanceData["카라잔 올클리어"][i].name)
-    GroupOrderInstanceKAA[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["카라잔 올클리어"][i].msg) end)
+    GroupOrderInstanceKAA[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["카라잔 올클리어"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceKAA[i]:SetPoint('TOP', selectInstanceKAA, 'TOP', 0, 0)
     else GroupOrderInstanceKAA[i]:SetPoint('TOP', GroupOrderInstanceKAA[i-1], 'BOTTOM', 0, -2)
@@ -376,7 +413,7 @@ for i = 1, #GroupOrderInstanceData["카라잔 파멸"] do
     GroupOrderInstanceKAL[i] = CreateFrame('Button', 'GroupOrderInstanceKAL'..i, selectInstanceKAL, 'OptionsButtonTemplate')
     GroupOrderInstanceKAL[i]:SetSize(100, 22)
     GroupOrderInstanceKAL[i]:SetText(GroupOrderInstanceData["카라잔 파멸"][i].name)
-    GroupOrderInstanceKAL[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["카라잔 파멸"][i].msg) end)
+    GroupOrderInstanceKAL[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["카라잔 파멸"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceKAL[i]:SetPoint('TOP', selectInstanceKAL, 'TOP', 0, 0)
     else GroupOrderInstanceKAL[i]:SetPoint('TOP', GroupOrderInstanceKAL[i-1], 'BOTTOM', 0, -2)
@@ -395,7 +432,7 @@ for i = 1, #GroupOrderRaidData["에메랄드의 악몽"] do
     GroupOrderRaidNoE[i] = CreateFrame('Button', 'GroupOrderRaidNoE'..i, selectRaidNoE, 'OptionsButtonTemplate')
     GroupOrderRaidNoE[i]:SetSize(100, 22)
     GroupOrderRaidNoE[i]:SetText(GroupOrderRaidData["에메랄드의 악몽"][i].name)
-    GroupOrderRaidNoE[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["에메랄드의 악몽"][i].msg) end)
+    GroupOrderRaidNoE[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["에메랄드의 악몽"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderRaidNoE[i]:SetPoint('TOP', selectRaidNoE, 'TOP', 0, 0)
     else GroupOrderRaidNoE[i]:SetPoint('TOP', GroupOrderRaidNoE[i-1], 'BOTTOM', 0, -2)
@@ -412,7 +449,7 @@ for i = 1, #GroupOrderRaidData["용맹의 시험"] do
     GroupOrderInstanceToH[i] = CreateFrame('Button', 'GroupOrderInstanceToH'..i, selectInstanceToH, 'OptionsButtonTemplate')
     GroupOrderInstanceToH[i]:SetSize(100, 22)
     GroupOrderInstanceToH[i]:SetText(GroupOrderRaidData["용맹의 시험"][i].name)
-    GroupOrderInstanceToH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["용맹의 시험"][i].msg) end)
+    GroupOrderInstanceToH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["용맹의 시험"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceToH[i]:SetPoint('TOP', selectInstanceToH, 'TOP', 0, 0)
     else GroupOrderInstanceToH[i]:SetPoint('TOP', GroupOrderInstanceToH[i-1], 'BOTTOM', 0, -2)
@@ -429,7 +466,7 @@ for i = 1, #GroupOrderRaidData["밤의 요새"] do
     GroupOrderInstanceHoN[i] = CreateFrame('Button', 'GroupOrderInstanceHoN'..i, selectInstanceHoN, 'OptionsButtonTemplate')
     GroupOrderInstanceHoN[i]:SetSize(100, 22)
     GroupOrderInstanceHoN[i]:SetText(GroupOrderRaidData["밤의 요새"][i].name)
-    GroupOrderInstanceHoN[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["밤의 요새"][i].msg) end)
+    GroupOrderInstanceHoN[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["밤의 요새"][i].msg, chatType) end)
 
     if i == 1 then GroupOrderInstanceHoN[i]:SetPoint('TOP', selectInstanceHoN, 'TOP', 0, 0)
     else GroupOrderInstanceHoN[i]:SetPoint('TOP', GroupOrderInstanceHoN[i-1], 'BOTTOM', 0, -2)

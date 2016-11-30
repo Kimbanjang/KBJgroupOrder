@@ -76,19 +76,24 @@ GroupOrderInstanceData = {
 			msg = "shamy, do you have Reincarnation?"
 			-- 샤미, 너 윤회 남아있냐?
 		},
+		[5] = {
+			name = "데스런 : 운회",
+			msg = "We'll' death-run to boss room. don't release."
+			-- 보스방 까지 데스런 한다. don't release. 전투가 완전히 풀린 것을 확인하고 윤회를 써라
+		},		
 		[4] = {
 			name = "전부 확인",
 			msg = "anyone remain brez?"
 			-- 전부 가지고 있는 사람?
 		},
-		[5] = {
-			name = "데스런 : 운회",
-			msg = "We'll' death-run to boss room. don't release."
-			-- 보스방 까지 데스런 한다. don't release. 전투가 완전히 풀린 것을 확인하고 윤회를 써라
-		},
 		[6] = {
 			name = "데스런 : 전부",
 			msg = "We'll' death-run to boss room. don't release. brez target is tank. right?"
+			-- 보스방 까지 데스런 한다. don't release. 죽기전에 태엌에게 전부를 걸어라.
+		},
+		[7] = {
+			name = "데스런 : 기공",
+			msg = "We'll' death-run to boss room. don't release. die on tank's position. right?"
 			-- 보스방 까지 데스런 한다. don't release. 죽기전에 태엌에게 전부를 걸어라.
 		},
 	},
