@@ -1,4 +1,4 @@
-## Interface: 70100
+## Interface: 70200
 ## Title: KBJ Group Order
 ## Version: 1.1
 ## Author: Kimbanjang
