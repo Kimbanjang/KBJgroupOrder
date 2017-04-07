@@ -245,9 +245,9 @@ local selectLegionNH_Skorpyron_BriefM = CreateButton(selectLegionNH_Skorpyron, 8
 selectLegionNH_Skorpyron_BriefH:SetScript("OnClick", function() OutputBrief("Skorpyron", 3) end)
 
 local selectLegionNH_Skorpyron_Blast = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefM, 'BOTTOM', 0, -8, "Blast")
-selectLegionNH_Skorpyron_Blast:SetScript("OnClick", function() SendChatMessage("Avoid [Focused Blast]!!", chatType) end)
+selectLegionNH_Skorpyron_Blast:SetScript("OnClick", function() SendChatMessage("Avoid |cff71d5ff|Hspell:204483:0|h[Focused Blast]|h|r!", chatType) end)
 local selectLegionNH_Skorpyron_Shockwave = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_Blast, 'BOTTOM', 0, -2, "Shockwave")
-selectLegionNH_Skorpyron_Shockwave:SetScript("OnClick", function() SendChatMessage("Income [Shockwave]! Hide behind the Broken Shard!!", chatType) end)
+selectLegionNH_Skorpyron_Shockwave:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:204316:0|h[Shockwave]|h|r! Hide behind the broken shard!!", chatType) end)
 
 -- Chronomatic
 local selectLegionNH_Chronomatic = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Chronomatic', UIParent)
