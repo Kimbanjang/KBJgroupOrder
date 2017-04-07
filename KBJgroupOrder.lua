@@ -343,15 +343,15 @@ selectLegionNH_Tichondrius_BriefH:SetScript("OnClick", function() OutputBrief("T
 local selectLegionNH_Tichondrius_BriefM = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefH, 'BOTTOM', 0, -2, "Brief M")
 selectLegionNH_Tichondrius_BriefM:SetScript("OnClick", function() OutputBrief("Tichondrius", 3) end)
 
-local selectLegionNH_Tichondrius_movePlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefM, 'BOTTOM', 0, -8, "M Plague")
+local selectLegionNH_Tichondrius_movePlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefM, 'BOTTOM', 0, -8, "Move |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:12:12|t")
 selectLegionNH_Tichondrius_movePlague:SetScript("OnClick", function() SendChatMessage("Plague on purple side", chatType) end)
-local selectLegionNH_Tichondrius_spreadPlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_movePlague, 'BOTTOM', 0, -2, "S Plague")
+local selectLegionNH_Tichondrius_spreadPlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_movePlague, 'BOTTOM', 0, -2, "Inc Bat")
 selectLegionNH_Tichondrius_spreadPlague:SetScript("OnClick", function() SendChatMessage("Income [Seeker Swarm]! Spread plague group! NEVER DUMP BRAND THIS TIME!!", chatType) end)
 local selectLegionNH_Tichondrius_killAdd = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_spreadPlague, 'BOTTOM', 0, -2, "Kill Add")
 selectLegionNH_Tichondrius_killAdd:SetScript("OnClick", function() SendChatMessage("Kill adds quickly!!", chatType) end)
 local selectLegionNH_Tichondrius_dumpBrand = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_killAdd, 'BOTTOM', 0, -8, "Dump Brand")
 selectLegionNH_Tichondrius_dumpBrand:SetScript("OnClick", function() SendChatMessage("Brand guy, Dump on group", chatType) end)
-local selectLegionNH_Tichondrius_stackCenter = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_dumpBrand, 'BOTTOM', 0, -8, "Stack")
+local selectLegionNH_Tichondrius_stackCenter = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_dumpBrand, 'BOTTOM', 0, -8, "Night")
 selectLegionNH_Tichondrius_stackCenter:SetScript("OnClick", function() SendChatMessage("Stack on center but dodge [Carrion Nightmare]", chatType) end)
 
 -- Krosus
