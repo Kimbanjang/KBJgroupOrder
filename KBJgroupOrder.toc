@@ -1,6 +1,6 @@
 ## Interface: 70200
 ## Title: KBJ Group Order
-## Version: 1.1
+## Version: 2.0
 ## Author: Kimbanjang
 ## Notes: Create Order Button for Group Control
 ## SavedVariables:

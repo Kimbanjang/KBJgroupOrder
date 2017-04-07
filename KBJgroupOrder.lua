@@ -1,95 +1,89 @@
--- Config
+-- Config -------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 local position_REF = 'CENTER'
 local position_X = 500
 local position_Y = 46
 local position_Align = 'TOP'
 
-local chatRepeat = 3 -- 알림챗 반복 횟수
-local chatType = "SAY" -- 말하기 = SAY / 외치기 = YELL / 파티 = PARTY / 인스턴스 = INSTANCE
--- /Config
+local chatRepeat = 1 -- 알림챗 반복 횟수
+local chatType = "SAY" -- 말하기 = SAY / 외치기 = YELL / 파티 = PARTY / 레이드 = RAID / 인스턴스 = INSTANCE
 
----
-
+-- Vars ---------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 local GroupOrder_Type = 0
 
----
-
-function PullingChat(timer)
-    SendChatMessage("Pulling after "..timer.."s!", chatType)
+-- Function -----------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+function SetPulling(time)
+    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull "..time)
+    SendChatMessage("Pulling after "..time.."s!", chatType)
     C_Timer.NewTicker(1, (function()
-        if timer > 1 then
-            timer = timer - 1
-            SendChatMessage(timer.."s!", chatType)
+        if time > 1 then
+            time = time - 1
+            SendChatMessage(time.."s!", chatType)
         else
             SendChatMessage("Pulling!!", chatType)
         end
-    end), timer)
+    end), time)
 end
 
-local OnClick_btnPullA = function(self)
-    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 3")
-    PullingChat(3)
+function OutputBrief(msgdb, diff)
+    local count = 1
+    local timer = #GroupOrderLegionNH[msgdb][diff]
+    SendChatMessage(GroupOrderLegionNH[msgdb][diff][count], chatType)
+    C_Timer.NewTicker(6, (function()
+        if timer > 1 then
+            count = count + 1
+            SendChatMessage(GroupOrderLegionNH[msgdb][diff][count], chatType)
+        else
+            SendChatMessage(GroupOrderLegionNH[msgdb][diff][timer], chatType)
+        end
+    end), timer-1)
 end
 
-local OnClick_btnPullB = function(self)
-    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 5")
-    PullingChat(5)
+function CreateButton(parent, sizeX, sixeY, positionS, positionA, positionAP, positionAX, positionAY, text)
+	local btn = CreateFrame('Button', nil, parent, 'OptionsButtonTemplate')
+	btn:SetSize(sizeX, sixeY)
+	btn:SetPoint(positionS, positionA, positionAP, positionAX, positionAY)
+	btn:SetText(text)
+	return btn
 end
 
-local OnClick_btnPullC = function(self)
-    MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull 12")
-    PullingChat(12)
+function CreateInput(parent, sizeX, sixeY, positionS, positionA, positionAP, positionAX, positionAY, text)
+	local input = CreateFrame('EditBox', nil, parent, 'InputBoxTemplate')
+	input:SetAutoFocus(false)
+	input:SetSize(sizeX, sixeY)
+	input:SetPoint(positionS, positionA, positionAP, positionAX, positionAY)
+	input:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+	input:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
+	input:SetText(text)
+	return input
 end
 
-local OnClick_btnCallLust = function(self)
-    for i=1, chatRepeat do
-        SendChatMessage("Lust!!!", chatType)
-    end
+local ClearFrameSub = function()
+    KBJGroupOrder_LegionNH_Skorpyron:Hide()
+	KBJGroupOrder_LegionNH_Chronomatic:Hide()
+	KBJGroupOrder_LegionNH_Trilliax:Hide()
+	KBJGroupOrder_LegionNH_Spellblade:Hide()
+	KBJGroupOrder_LegionNH_Tichondrius:Hide()
+	KBJGroupOrder_LegionNH_Krosus:Hide()
+	KBJGroupOrder_LegionNH_Botanist:Hide()
+	KBJGroupOrder_LegionNH_StarAugur:Hide()
+    KBJGroupOrder_LegionNH_Elisande:Hide()
+	KBJGroupOrder_LegionNH_Guldan:Hide()
 end
 
-local OnClick_btnWaitHere = function(self)
-    for i=1, chatRepeat do
-        SendChatMessage("Wait on Blue{네모} for LOS", chatType)
-    end
+local ClearFrameAll = function()
+    KBJGroupOrder_Type:Hide()
+	KBJGroupOrder_KeyStone:Hide()
+	KBJGroupOrder_LegionNH:Hide()
+	ClearFrameSub()
 end
 
-local OnClick_btnMove = function(self)
-    for i=1, chatRepeat do
-        SendChatMessage("Follow Orange{동그라미}", chatType)
-    end
-end
-
-local OnClick_btnStack = function(self)
-    for i=1, chatRepeat do
-        SendChatMessage("Stack on Orange{동그라미}", chatType)
-    end
-end
-
-local OnClick_btnBack = function(self)
-    for i=1, chatRepeat do
-        SendChatMessage("Stay Back!!", chatType)
-    end
-end
-
+-- Click Event --------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 local OnClick_btnSelect = function(self)
-    KBJGroupOrder_Instance:Hide()
-    KBJGroupOrder_Raid:Hide()
-
-    KBJGroupOrder_Instance_VoW:Hide()
-    KBJGroupOrder_Instance_BRH:Hide()
-    KBJGroupOrder_Instance_NEL:Hide()
-    KBJGroupOrder_Instance_CoS:Hide()
-    KBJGroupOrder_Instance_ARC:Hide()
-    KBJGroupOrder_Instance_EoA:Hide()
-    KBJGroupOrder_Instance_DHT:Hide()
-    KBJGroupOrder_Instance_MEW:Hide()
-    KBJGroupOrder_Instance_VoH:Hide()
-    KBJGroupOrder_Instance_KAA:Hide()
-    KBJGroupOrder_Instance_KAL:Hide()
-
-    KBJGroupOrder_Raid_NoE:Hide()
-    KBJGroupOrder_Raid_ToH:Hide()
-    KBJGroupOrder_Raid_HoN:Hide()
+    ClearFrameAll()
 
     if GroupOrder_Type == 1 then
         KBJGroupOrder_Type:Hide()
@@ -100,47 +94,73 @@ local OnClick_btnSelect = function(self)
     end
 end
 
-local OnClick_selectTypeInstance = function(self)
+local OnClick_btnSelectType = function(item)
     KBJGroupOrder_Type:Hide()
-    KBJGroupOrder_Instance:Show()
-    GroupOrder_Type = 0
+    KBJGroupOrder_LegionNH:Hide()
+
+    if item == "Keystone" then
+        KBJGroupOrder_KeyStone:Show()
+    elseif item == "Nightmare" then    	
+        GroupOrder_Type = 0
+        print("Not Found")
+    elseif item == "ToV" then    	
+        GroupOrder_Type = 0
+        print("Not Found")
+    elseif item == "Nighthold" then
+        KBJGroupOrder_LegionNH:Show()
+    end
 end
 
-local OnClick_selectTypeRaid = function(self)
+local OnClick_btnSelectLegionNH = function(item)
     KBJGroupOrder_Type:Hide()
-    KBJGroupOrder_Raid:Show()      
-    GroupOrder_Type = 0
+
+    if item == "Skorpyron" then
+        ClearFrameSub()
+		KBJGroupOrder_LegionNH_Skorpyron:Show()
+    elseif item == "Chronomatic" then
+        ClearFrameSub()
+        KBJGroupOrder_LegionNH_Chronomatic:Show()
+    elseif item == "Trilliax" then
+    	ClearFrameSub()
+		KBJGroupOrder_LegionNH_Trilliax:Show()
+    elseif item == "Spellblade" then
+    	ClearFrameSub()
+		KBJGroupOrder_LegionNH_Spellblade:Show()
+    elseif item == "Tichondrius" then
+    	ClearFrameSub()
+		KBJGroupOrder_LegionNH_Tichondrius:Show()
+    elseif item == "Krosus" then
+    	ClearFrameSub()
+    	KBJGroupOrder_LegionNH_Krosus:Show()
+    elseif item == "Botanist" then
+    	ClearFrameSub()
+    	KBJGroupOrder_LegionNH_Botanist:Show()
+    elseif item == "StarAugur" then
+    	ClearFrameSub()
+    	KBJGroupOrder_LegionNH_StarAugur:Show()
+    elseif item == "Elisande" then
+    	ClearFrameSub()
+    	KBJGroupOrder_LegionNH_Elisande:Show()
+    elseif item == "Guldan" then
+    	ClearFrameSub()
+		KBJGroupOrder_LegionNH_Guldan:Show()
+    end
 end
 
----
-
+-- Main Frame ---------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 local mainFrame = CreateFrame('Frame', 'KBJGroupOrder', UIParent)
 mainFrame:SetSize(100, 178)
 mainFrame:SetPoint(position_Align, UIParent, position_REF, position_X, position_Y)
 
-local btnPullA = CreateFrame('Button', 'btnPullA', mainFrame, 'OptionsButtonTemplate')
-btnPullA:SetSize(48, 22)
-btnPullA:SetPoint('TOPLEFT', mainFrame, 'TOPLEFT', 0, 0)
-btnPullA:SetText("3초 풀")
-btnPullA:SetScript("OnClick", OnClick_btnPullA)
-
-local btnPullB = CreateFrame('Button', 'btnPullB', mainFrame, 'OptionsButtonTemplate')
-btnPullB:SetSize(25, 22)
-btnPullB:SetPoint('LEFT', btnPullA, 'RIGHT', 1, 0)
-btnPullB:SetText("5")
-btnPullB:SetScript("OnClick", OnClick_btnPullB)
-
-local btnPullC = CreateFrame('Button', 'btnPullC', mainFrame, 'OptionsButtonTemplate')
-btnPullC:SetSize(25, 22)
-btnPullC:SetPoint('LEFT', btnPullB, 'RIGHT', 1, 0)
-btnPullC:SetText("12")
-btnPullC:SetScript("OnClick", OnClick_btnPullC)
-
-local btnCallHero = CreateFrame('Button', 'btnCallLust', mainFrame, 'OptionsButtonTemplate')
-btnCallLust:SetSize(100, 22)
-btnCallLust:SetPoint('TOPLEFT', btnPullA, 'BOTTOMLEFT', 0, -2)
-btnCallLust:SetText("영웅심!")
-btnCallLust:SetScript("OnClick", OnClick_btnCallLust)
+local btnPullA = CreateButton(mainFrame, 48, 22, 'TOPLEFT', mainFrame, 'TOPLEFT', 0, 0, "3초 풀")
+btnPullA:SetScript("OnClick", function() SetPulling(3) end)
+local btnPullB = CreateButton(mainFrame, 25, 22, 'LEFT', btnPullA, 'RIGHT', 1, 0, "5")
+btnPullB:SetScript("OnClick", function() SetPulling(5) end)
+local btnPullC = CreateButton(mainFrame, 25, 22, 'LEFT', btnPullB, 'RIGHT', 1, 0, "10")
+btnPullC:SetScript("OnClick", function() SetPulling(10) end)
+local btnCallLust = CreateButton(mainFrame, 100, 22, 'TOPLEFT', btnPullA, 'BOTTOMLEFT', 0, -2, "영웅심!")
+btnCallLust:SetScript("OnClick", function() SendChatMessage("Lust!!!", chatType) end)
 
 local btnWaitHereMark = CreateFrame('Button', 'btnWaitHereMark', mainFrame, 'SecureActionButtonTemplate, OptionsButtonTemplate')
 btnWaitHereMark:SetSize(22, 22)
@@ -148,393 +168,375 @@ btnWaitHereMark:SetPoint('TOPLEFT', btnCallLust, 'BOTTOMLEFT', 0, -8)
 btnWaitHereMark:SetText("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:12:12|t")
 btnWaitHereMark:SetAttribute("type", "macro")
 btnWaitHereMark:SetAttribute("macrotext", "/wm 1")
+local btnWaitHere = CreateButton(mainFrame, 77, 22, 'LEFT', btnWaitHereMark, 'RIGHT', 1, 0, "에서 기다려")
+btnWaitHere:SetScript("OnClick", function() SendChatMessage("Wait on Blue{네모} for LOS", chatType) end)
 
-local btnWaitHere = CreateFrame('Button', 'btnWaitHere', mainFrame, 'OptionsButtonTemplate')
-btnWaitHere:SetSize(77, 22)
-btnWaitHere:SetPoint('LEFT', btnWaitHereMark, 'RIGHT', 1, 0)
-btnWaitHere:SetText("에서 기다려")
-btnWaitHere:SetScript("OnClick", OnClick_btnWaitHere)
-
-local btnMove = CreateFrame('Button', 'btnMove', mainFrame, 'OptionsButtonTemplate')
-btnMove:SetSize(100, 22)
-btnMove:SetPoint('TOPLEFT', btnWaitHereMark, 'BOTTOMLEFT', 0, -2)
-btnMove:SetText("오렌지를 따라와")
-btnMove:SetScript("OnClick", OnClick_btnMove)
-
-local btnStack = CreateFrame('Button', 'btnStack', mainFrame, 'OptionsButtonTemplate')
-btnStack:SetSize(100, 22)
-btnStack:SetPoint('TOP', btnMove, 'BOTTOM', 0, -2)
-btnStack:SetText("오렌지에게 모여")
-btnStack:SetScript("OnClick", OnClick_btnStack)
-
-local btnBack = CreateFrame('Button', 'btnBack', mainFrame, 'OptionsButtonTemplate')
-btnBack:SetSize(100, 22)
-btnBack:SetPoint('TOP', btnStack, 'BOTTOM', 0, -2)
-btnBack:SetText("물러서")
-btnBack:SetScript("OnClick", OnClick_btnBack)
-
-local btnSelect = CreateFrame('Button', 'btnSelect', mainFrame, 'OptionsButtonTemplate')
-btnSelect:SetSize(100, 22)
-btnSelect:SetPoint('TOP', btnBack, 'BOTTOM', 0, -8)
-btnSelect:SetText("브리핑 세트")
+local btnMove = CreateButton(mainFrame, 100, 22, 'TOPLEFT', btnWaitHereMark, 'BOTTOMLEFT', 0, -2, "오렌지를 따라와")
+btnMove:SetScript("OnClick", function() SendChatMessage("Follow Orange{동그라미}", chatType) end)
+local btnStack = CreateButton(mainFrame, 100, 22, 'TOP', btnMove, 'BOTTOM', 0, -2, "오렌지에게 모여")
+btnStack:SetScript("OnClick", function() SendChatMessage("Stack on Orange{동그라미}", chatType) end)
+local btnBack = CreateButton(mainFrame, 100, 22, 'TOP', btnStack, 'BOTTOM', 0, -2, "물러서")
+btnBack:SetScript("OnClick", function() SendChatMessage("Stay Back!!", chatType) end)
+local btnSelect = CreateButton(mainFrame, 100, 22, 'TOP', btnBack, 'BOTTOM', 0, -8, "브리핑 세트")
 btnSelect:SetScript("OnClick", OnClick_btnSelect)
 
----
-
+-- List Frame ---------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
 local selectType = CreateFrame('Frame', 'KBJGroupOrder_Type', UIParent)
 selectType:SetSize(100, 94)
 selectType:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
 
-local selectTypeInstance = CreateFrame('Button', 'selectTypeInstance', selectType, 'OptionsButtonTemplate')
-selectTypeInstance:SetSize(100, 22)
-selectTypeInstance:SetPoint('TOP', selectType, 'TOP', 0, 0)
-selectTypeInstance:SetText("Instance")
-selectTypeInstance:SetScript("OnClick", OnClick_selectTypeInstance)
+local GO_selectType = {}
+for i = 1, #GroupOrderType do
+    GO_selectType[i] = CreateFrame('Button', 'GO_selectType'..i, selectType, 'OptionsButtonTemplate')
+    GO_selectType[i]:SetSize(100, 22)
+    GO_selectType[i]:SetText(GroupOrderType[i])
+    GO_selectType[i]:SetScript("OnClick", function() OnClick_btnSelectType(GroupOrderType[i]) end)
 
-local selectTypeRaid = CreateFrame('Button', 'selectTypeRaid', selectType, 'OptionsButtonTemplate')
-selectTypeRaid:SetSize(100, 22)
-selectTypeRaid:SetPoint('TOP', selectTypeInstance, 'BOTTOM', 0, -2)
-selectTypeRaid:SetText("Raid")
-selectTypeRaid:SetScript("OnClick", OnClick_selectTypeRaid)
-
----
-
-local selectInstance = CreateFrame('Frame', 'KBJGroupOrder_Instance', UIParent)
-selectInstance:SetSize(100, (24 * #GroupOrderInstanceName) - 2)
-selectInstance:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
-
-local GroupOrderInstance = {}
-for i = 1, #GroupOrderInstanceName do
-    GroupOrderInstance[i] = CreateFrame('Button', 'GroupOrderInstance'..i, selectInstance, 'OptionsButtonTemplate')
-    GroupOrderInstance[i]:SetSize(100, 22)
-    GroupOrderInstance[i]:SetText(GroupOrderInstanceName[i])
-    GroupOrderInstance[i]:SetScript("OnClick", function() selectTypeInstanceItem(GroupOrderInstanceName[i]) end)
-
-    if i == 1 then GroupOrderInstance[i]:SetPoint('TOP', selectInstance, 'TOP', 0, 0)
-    else GroupOrderInstance[i]:SetPoint('TOP', GroupOrderInstance[i-1], 'BOTTOM', 0, -2)
+    if i == 1 then GO_selectType[i]:SetPoint('TOP', selectType, 'TOP', 0, 0)
+    else GO_selectType[i]:SetPoint('TOP', GO_selectType[i-1], 'BOTTOM', 0, -2)
     end
 end
 
-local selectRaid = CreateFrame('Frame', 'KBJGroupOrder_Raid', UIParent)
-selectRaid:SetSize(100, (24 * #GroupOrderRaidName) - 2)
-selectRaid:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local selectKeyStone = CreateFrame('Frame', 'KBJGroupOrder_KeyStone', UIParent)
+selectKeyStone:SetSize(100, (24 * #GroupOrderTypeData["Keystone"]) - 2)
+selectKeyStone:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
 
-local GroupOrderRaid = {}
-for i = 1, #GroupOrderRaidName do
-    GroupOrderRaid[i] = CreateFrame('Button', 'GroupOrderRaid'..i, selectRaid, 'OptionsButtonTemplate')
-    GroupOrderRaid[i]:SetSize(100, 22)
-    GroupOrderRaid[i]:SetText(GroupOrderRaidName[i])
-    GroupOrderRaid[i]:SetScript("OnClick", function() selectTypeRaidItem(GroupOrderRaidName[i]) end)
+local KeyStone = {}
+for i = 1, #GroupOrderTypeData["Keystone"] do
+    KeyStone[i] = CreateFrame('Button', 'btnKeyStone'..i, selectKeyStone, 'OptionsButtonTemplate')
+    KeyStone[i]:SetSize(100, 22)
+    KeyStone[i]:SetText(GroupOrderTypeData["Keystone"][i].name)
+    KeyStone[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderTypeData["Keystone"][i].msg, chatType) end)
 
-    if i == 1 then GroupOrderRaid[i]:SetPoint('TOP', selectRaid, 'TOP', 0, 0)
-    else GroupOrderRaid[i]:SetPoint('TOP', GroupOrderRaid[i-1], 'BOTTOM', 0, -2)
+    if i == 1 then KeyStone[i]:SetPoint('TOP', selectKeyStone, 'TOP', 0, 0)
+    else KeyStone[i]:SetPoint('TOP', KeyStone[i-1], 'BOTTOM', 0, -2)
     end
 end
 
----
+local selectLegionNH = CreateFrame('Frame', 'KBJGroupOrder_LegionNH', UIParent)
+selectLegionNH:SetSize(100, (24 * #GroupOrderTypeData["Nighthold"]) - 2)
+selectLegionNH:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
 
--- 감시관의 금고
-local selectInstanceVoW = CreateFrame('Frame', 'KBJGroupOrder_Instance_VoW', UIParent)
-selectInstanceVoW:SetSize(100, (24 * #GroupOrderInstanceData["감시관의 금고"]) - 2)
-selectInstanceVoW:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local LegionNH = {}
+for i = 1, #GroupOrderTypeData["Nighthold"] do
+    LegionNH[i] = CreateFrame('Button', 'btnLegionNH'..i, selectLegionNH, 'OptionsButtonTemplate')
+    LegionNH[i]:SetSize(100, 22)
+    LegionNH[i]:SetText(GroupOrderTypeData["Nighthold"][i])
+    LegionNH[i]:SetScript("OnClick", function() OnClick_btnSelectLegionNH(GroupOrderTypeData["Nighthold"][i]) end)
 
-local GroupOrderInstanceVoW = {}
-for i = 1, #GroupOrderInstanceData["감시관의 금고"] do
-    GroupOrderInstanceVoW[i] = CreateFrame('Button', 'GroupOrderInstanceVoW'..i, selectInstanceVoW, 'OptionsButtonTemplate')
-    GroupOrderInstanceVoW[i]:SetSize(100, 22)
-    GroupOrderInstanceVoW[i]:SetText(GroupOrderInstanceData["감시관의 금고"][i].name)
-    GroupOrderInstanceVoW[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["감시관의 금고"][i].msg, chatType) end)
-
-    if i == 1 then GroupOrderInstanceVoW[i]:SetPoint('TOP', selectInstanceVoW, 'TOP', 0, 0)
-    else GroupOrderInstanceVoW[i]:SetPoint('TOP', GroupOrderInstanceVoW[i-1], 'BOTTOM', 0, -2)
+    if i == 1 then LegionNH[i]:SetPoint('TOP', selectLegionNH, 'TOP', 0, 0)
+    else LegionNH[i]:SetPoint('TOP', LegionNH[i-1], 'BOTTOM', 0, -2)
     end
 end
 
--- 검은 떼까마귀 요새
-local selectInstanceBRH = CreateFrame('Frame', 'KBJGroupOrder_Instance_BRH', UIParent)
-selectInstanceBRH:SetSize(100, (24 * #GroupOrderInstanceData["검은 떼까마귀"]) - 2)
-selectInstanceBRH:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Mech Frame ---------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------
+-- Skorpyron
+local selectLegionNH_Skorpyron = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Skorpyron', UIParent)
+selectLegionNH_Skorpyron:SetSize(80, 178)
+selectLegionNH_Skorpyron:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceBRH = {}
-for i = 1, #GroupOrderInstanceData["검은 떼까마귀"] do
-    GroupOrderInstanceBRH[i] = CreateFrame('Button', 'GroupOrderInstanceBRH'..i, selectInstanceBRH, 'OptionsButtonTemplate')
-    GroupOrderInstanceBRH[i]:SetSize(100, 22)
-    GroupOrderInstanceBRH[i]:SetText(GroupOrderInstanceData["검은 떼까마귀"][i].name)
-    GroupOrderInstanceBRH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["검은 떼까마귀"][i].msg, chatType) end)
+local selectLegionNH_Skorpyron_BriefN = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Skorpyron_BriefN:SetScript("OnClick", function() OutputBrief("Skorpyron", 1) end)
+local selectLegionNH_Skorpyron_BriefH = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Skorpyron_BriefH:SetScript("OnClick", function() OutputBrief("Skorpyron", 2) end)
+local selectLegionNH_Skorpyron_BriefM = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Skorpyron_BriefH:SetScript("OnClick", function() OutputBrief("Skorpyron", 3) end)
 
-    if i == 1 then GroupOrderInstanceBRH[i]:SetPoint('TOP', selectInstanceBRH, 'TOP', 0, 0)
-    else GroupOrderInstanceBRH[i]:SetPoint('TOP', GroupOrderInstanceBRH[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Skorpyron_Blast = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefM, 'BOTTOM', 0, -8, "Blast")
+selectLegionNH_Skorpyron_Blast:SetScript("OnClick", function() SendChatMessage("Avoid [Focused Blast]!!", chatType) end)
+local selectLegionNH_Skorpyron_Shockwave = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_Blast, 'BOTTOM', 0, -2, "Shockwave")
+selectLegionNH_Skorpyron_Shockwave:SetScript("OnClick", function() SendChatMessage("Income [Shockwave]! Hide behind the Broken Shard!!", chatType) end)
 
--- 넬타리온의 둥지
-local selectInstanceNEL = CreateFrame('Frame', 'KBJGroupOrder_Instance_NEL', UIParent)
-selectInstanceNEL:SetSize(100, (24 * #GroupOrderInstanceData["넬타리온의 둥지"]) - 2)
-selectInstanceNEL:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Chronomatic
+local selectLegionNH_Chronomatic = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Chronomatic', UIParent)
+selectLegionNH_Chronomatic:SetSize(80, 178)
+selectLegionNH_Chronomatic:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceNEL = {}
-for i = 1, #GroupOrderInstanceData["넬타리온의 둥지"] do
-    GroupOrderInstanceNEL[i] = CreateFrame('Button', 'GroupOrderInstanceNEL'..i, selectInstanceNEL, 'OptionsButtonTemplate')
-    GroupOrderInstanceNEL[i]:SetSize(100, 22)
-    GroupOrderInstanceNEL[i]:SetText(GroupOrderInstanceData["넬타리온의 둥지"][i].name)
-    GroupOrderInstanceNEL[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["넬타리온의 둥지"][i].msg, chatType) end)
+local selectLegionNH_Chronomatic_BriefN = CreateButton(selectLegionNH_Chronomatic, 80, 22, 'TOP', selectLegionNH_Chronomatic, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Chronomatic_BriefN:SetScript("OnClick", function() OutputBrief("Chronomatic", 1) end)
+local selectLegionNH_Chronomatic_BriefH = CreateButton(selectLegionNH_Chronomatic, 80, 22, 'TOP', selectLegionNH_Chronomatic_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Chronomatic_BriefH:SetScript("OnClick", function() OutputBrief("Chronomatic", 2) end)
+local selectLegionNH_Chronomatic_BriefM = CreateButton(selectLegionNH_Chronomatic, 80, 22, 'TOP', selectLegionNH_Chronomatic_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Chronomatic_BriefM:SetScript("OnClick", function() OutputBrief("Chronomatic", 3) end)
 
-    if i == 1 then GroupOrderInstanceNEL[i]:SetPoint('TOP', selectInstanceNEL, 'TOP', 0, 0)
-    else GroupOrderInstanceNEL[i]:SetPoint('TOP', GroupOrderInstanceNEL[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Chronomatic_orderHealA = CreateInput(selectLegionNH_Chronomatic, 71, 22, 'TOP', selectLegionNH_Chronomatic_BriefM, 'BOTTOM', 3, -8, "1st")
+local selectLegionNH_Chronomatic_orderHealB = CreateInput(selectLegionNH_Chronomatic, 71, 22, 'TOP', selectLegionNH_Chronomatic_orderHealA, 'BOTTOM', 0, -2, "2nd")
+local selectLegionNH_Chronomatic_orderHealC = CreateInput(selectLegionNH_Chronomatic, 71, 22, 'TOP', selectLegionNH_Chronomatic_orderHealB, 'BOTTOM', 0, -2, "3rd")
+local selectLegionNH_Chronomatic_orderHealD = CreateInput(selectLegionNH_Chronomatic, 71, 22, 'TOP', selectLegionNH_Chronomatic_orderHealC, 'BOTTOM', 0, -2, "4rd")
 
--- 별의 궁정
-local selectInstanceCoS = CreateFrame('Frame', 'KBJGroupOrder_Instance_CoS', UIParent)
-selectInstanceCoS:SetSize(100, (24 * #GroupOrderInstanceData["별의 궁정"]) - 2)
-selectInstanceCoS:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local selectLegionNH_Chronomatic_orderActHealA = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealA, 'LEFT', -9, 0, "Act")
+selectLegionNH_Chronomatic_orderActHealA:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealA:GetText().." UP plz!!!!", chatType) end) 
+local selectLegionNH_Chronomatic_orderActHealB = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealB, 'LEFT', -9, 0, "Act")
+selectLegionNH_Chronomatic_orderActHealB:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealB:GetText().." UP plz!!!!", chatType) end) 
+local selectLegionNH_Chronomatic_orderActHealC = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealC, 'LEFT', -9, 0, "Act")
+selectLegionNH_Chronomatic_orderActHealC:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealC:GetText().." UP plz!!!!", chatType) end) 
+local selectLegionNH_Chronomatic_orderActHealD = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealD, 'LEFT', -9, 0, "Act")
+selectLegionNH_Chronomatic_orderActHealD:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealD:GetText().." UP plz!!!!", chatType) end) 
 
-local GroupOrderInstanceCoS = {}
-for i = 1, #GroupOrderInstanceData["별의 궁정"] do
-    GroupOrderInstanceCoS[i] = CreateFrame('Button', 'GroupOrderInstanceCoS'..i, selectInstanceCoS, 'OptionsButtonTemplate')
-    GroupOrderInstanceCoS[i]:SetSize(100, 22)
-    GroupOrderInstanceCoS[i]:SetText(GroupOrderInstanceData["별의 궁정"][i].name)
-    GroupOrderInstanceCoS[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["별의 궁정"][i].msg, chatType) end)
+local selectLegionNH_Chronomatic_orderBriefHealA = CreateButton(selectLegionNH_Chronomatic, 22, 22, 'RIGHT', selectLegionNH_Chronomatic_orderActHealA, 'LEFT', -1, 0, "B")
+selectLegionNH_Chronomatic_orderBriefHealA:SetScript("OnClick", function() SendChatMessage("1st Healing CD : "..selectLegionNH_Chronomatic_orderHealA:GetText(), chatType) end) 
+local selectLegionNH_Chronomatic_orderBriefHealB = CreateButton(selectLegionNH_Chronomatic, 22, 22, 'RIGHT', selectLegionNH_Chronomatic_orderActHealB, 'LEFT', -1, 0, "B")
+selectLegionNH_Chronomatic_orderBriefHealB:SetScript("OnClick", function() SendChatMessage("2nd Healing CD : "..selectLegionNH_Chronomatic_orderHealB:GetText(), chatType) end) 
+local selectLegionNH_Chronomatic_orderBriefHealC = CreateButton(selectLegionNH_Chronomatic, 22, 22, 'RIGHT', selectLegionNH_Chronomatic_orderActHealC, 'LEFT', -1, 0, "B")
+selectLegionNH_Chronomatic_orderBriefHealC:SetScript("OnClick", function() SendChatMessage("3rd Healing CD : "..selectLegionNH_Chronomatic_orderHealC:GetText(), chatType) end) 
+local selectLegionNH_Chronomatic_orderBriefHealD = CreateButton(selectLegionNH_Chronomatic, 22, 22, 'RIGHT', selectLegionNH_Chronomatic_orderActHealD, 'LEFT', -1, 0, "B")
+selectLegionNH_Chronomatic_orderBriefHealD:SetScript("OnClick", function() SendChatMessage("4rd Healing CD : "..selectLegionNH_Chronomatic_orderHealD:GetText(), chatType) end) 
 
-    if i == 1 then GroupOrderInstanceCoS[i]:SetPoint('TOP', selectInstanceCoS, 'TOP', 0, 0)
-    else GroupOrderInstanceCoS[i]:SetPoint('TOP', GroupOrderInstanceCoS[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Chronomatic_moveAdd = CreateButton(selectLegionNH_Chronomatic, 80, 22, 'TOP', selectLegionNH_Chronomatic_orderHealD, 'BOTTOM', -3, -8, "Move Add")
+selectLegionNH_Chronomatic_moveAdd:SetScript("OnClick", function() SendChatMessage("Tank, Move to Add!", chatType) end)
+local selectLegionNH_Chronomatic_stackMoon = CreateButton(selectLegionNH_Chronomatic, 80, 22, 'TOP', selectLegionNH_Chronomatic_moveAdd, 'BOTTOM', 0, -2, "Stack |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:12:12|t")
+selectLegionNH_Chronomatic_stackMoon:SetScript("OnClick", function() SendChatMessage("Stack on Moon{달} for healer's cooldowns spell", chatType) end)
 
--- 비전로
-local selectInstanceARC = CreateFrame('Frame', 'KBJGroupOrder_Instance_ARC', UIParent)
-selectInstanceARC:SetSize(100, (24 * #GroupOrderInstanceData["비전로"]) - 2)
-selectInstanceARC:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Trilliax
+local selectLegionNH_Trilliax = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Trilliax', UIParent)
+selectLegionNH_Trilliax:SetSize(80, 178)
+selectLegionNH_Trilliax:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceARC = {}
-for i = 1, #GroupOrderInstanceData["비전로"] do
-    GroupOrderInstanceARC[i] = CreateFrame('Button', 'GroupOrderInstanceARC'..i, selectInstanceARC, 'OptionsButtonTemplate')
-    GroupOrderInstanceARC[i]:SetSize(100, 22)
-    GroupOrderInstanceARC[i]:SetText(GroupOrderInstanceData["비전로"][i].name)
-    GroupOrderInstanceARC[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["비전로"][i].msg, chatType) end)
+local selectLegionNH_Trilliax_BriefN = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOP', selectLegionNH_Trilliax, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Trilliax_BriefN:SetScript("OnClick", function() OutputBrief("Trilliax", 1) end)
+local selectLegionNH_Trilliax_BriefH = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOP', selectLegionNH_Trilliax_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Chronomatic_BriefH:SetScript("OnClick", function() OutputBrief("Trilliax", 2) end)
+local selectLegionNH_Trilliax_BriefM = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOP', selectLegionNH_Trilliax_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Trilliax_BriefM:SetScript("OnClick", function() OutputBrief("Trilliax", 3) end)
 
-    if i == 1 then GroupOrderInstanceARC[i]:SetPoint('TOP', selectInstanceARC, 'TOP', 0, 0)
-    else GroupOrderInstanceARC[i]:SetPoint('TOP', GroupOrderInstanceARC[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Trilliax_Cake = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOPLEFT', selectLegionNH_Trilliax_BriefM, 'BOTTOMLEFT', 0, -8, "CAKE")
+selectLegionNH_Trilliax_Cake:SetScript("OnClick", function() SendChatMessage("EAT CAKE!!", chatType) end)
+local selectLegionNH_Trilliax_Soak = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOPLEFT', selectLegionNH_Trilliax_Cake, 'BOTTOMLEFT', 0, -2, "SOAK")
+selectLegionNH_Trilliax_Soak:SetScript("OnClick", function() SendChatMessage("Check and Soak the Scrubber!", chatType) end)
+local selectLegionNH_Trilliax_Anni = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOPLEFT', selectLegionNH_Trilliax_Soak, 'BOTTOMLEFT', 0, -8, "Annihilation")
+selectLegionNH_Trilliax_Anni:SetScript("OnClick", function() SendChatMessage("Income [Annihilation]. If u get Link, Move to the left-side of the boss", chatType) end)
 
--- 아즈샤라의 눈
-local selectInstanceEoA = CreateFrame('Frame', 'KBJGroupOrder_Instance_EoA', UIParent)
-selectInstanceEoA:SetSize(100, (24 * #GroupOrderInstanceData["아즈샤라의 눈"]) - 2)
-selectInstanceEoA:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Spellblade
+local selectLegionNH_Spellblade = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Spellblade', UIParent)
+selectLegionNH_Spellblade:SetSize(80, 178)
+selectLegionNH_Spellblade:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceEoA = {}
-for i = 1, #GroupOrderInstanceData["아즈샤라의 눈"] do
-    GroupOrderInstanceEoA[i] = CreateFrame('Button', 'GroupOrderInstanceEoA'..i, selectInstanceEoA, 'OptionsButtonTemplate')
-    GroupOrderInstanceEoA[i]:SetSize(100, 22)
-    GroupOrderInstanceEoA[i]:SetText(GroupOrderInstanceData["아즈샤라의 눈"][i].name)
-    GroupOrderInstanceEoA[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["아즈샤라의 눈"][i].msg, chatType) end)
+local selectLegionNH_Spellblade_BriefN = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Spellblade_BriefN:SetScript("OnClick", function() OutputBrief("Spellblade", 1) end)
+local selectLegionNH_Spellblade_BriefH = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Spellblade_BriefH:SetScript("OnClick", function() OutputBrief("Spellblade", 1) end)
+local selectLegionNH_Spellblade_BriefM = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Spellblade_BriefM:SetScript("OnClick", function() OutputBrief("Spellblade", 3) end)
 
-    if i == 1 then GroupOrderInstanceEoA[i]:SetPoint('TOP', selectInstanceEoA, 'TOP', 0, 0)
-    else GroupOrderInstanceEoA[i]:SetPoint('TOP', GroupOrderInstanceEoA[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Spellblade_frostOut = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_BriefM, 'BOTTOM', 0, -8, "1:Out!")
+selectLegionNH_Spellblade_frostOut:SetScript("OnClick", function() SendChatMessage("Move to the rainbow worldmark when got [Mark of Frost]", chatType) end)
+local selectLegionNH_Spellblade_fireApart = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_frostOut, 'BOTTOM', 0, -8, "2:Apart")
+selectLegionNH_Spellblade_fireApart:SetScript("OnClick", function() SendChatMessage("Fire Spawnner, 8 yards apart!", chatType) end)
+local selectLegionNH_Spellblade_fireKick = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_fireApart, 'BOTTOM', 0, -2, "2:Kick!")
+selectLegionNH_Spellblade_fireKick:SetScript("OnClick", function() SendChatMessage("Kill adds and interrupt the [Pyroblast]", chatType) end)
+local selectLegionNH_Spellblade_arcaneStack = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_fireKick, 'BOTTOM', 0, -8, "3:Stack")
+selectLegionNH_Spellblade_arcaneStack:SetScript("OnClick", function() SendChatMessage("Stack on Moon{달} worldmark", chatType) end)
+local selectLegionNH_Spellblade_arcaneDCDs = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_arcaneStack, 'BOTTOM', 0, -2, "3:DCDs")
+selectLegionNH_Spellblade_arcaneDCDs:SetScript("OnClick", function() SendChatMessage("Using you're Deffense CD", chatType) end)
 
--- 어둠심장 숲
-local selectInstanceDHT = CreateFrame('Frame', 'KBJGroupOrder_Instance_DHT', UIParent)
-selectInstanceDHT:SetSize(100, (24 * #GroupOrderInstanceData["어둠심장 숲"]) - 2)
-selectInstanceDHT:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Tichondrius
+local selectLegionNH_Tichondrius = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Tichondrius', UIParent)
+selectLegionNH_Tichondrius:SetSize(80, 178)
+selectLegionNH_Tichondrius:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceDHT = {}
-for i = 1, #GroupOrderInstanceData["어둠심장 숲"] do
-    GroupOrderInstanceDHT[i] = CreateFrame('Button', 'GroupOrderInstanceDHT'..i, selectInstanceDHT, 'OptionsButtonTemplate')
-    GroupOrderInstanceDHT[i]:SetSize(100, 22)
-    GroupOrderInstanceDHT[i]:SetText(GroupOrderInstanceData["어둠심장 숲"][i].name)
-    GroupOrderInstanceDHT[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["어둠심장 숲"][i].msg, chatType) end)
+local selectLegionNH_Tichondrius_BriefN = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Tichondrius_BriefN:SetScript("OnClick", function() OutputBrief("Tichondrius", 1) end)
+local selectLegionNH_Tichondrius_BriefH = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Tichondrius_BriefH:SetScript("OnClick", function() OutputBrief("Tichondrius", 2) end)
+local selectLegionNH_Tichondrius_BriefM = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Tichondrius_BriefM:SetScript("OnClick", function() OutputBrief("Tichondrius", 3) end)
 
-    if i == 1 then GroupOrderInstanceDHT[i]:SetPoint('TOP', selectInstanceDHT, 'TOP', 0, 0)
-    else GroupOrderInstanceDHT[i]:SetPoint('TOP', GroupOrderInstanceDHT[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Tichondrius_movePlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefM, 'BOTTOM', 0, -8, "M Plague")
+selectLegionNH_Tichondrius_movePlague:SetScript("OnClick", function() SendChatMessage("Plague on purple side", chatType) end)
+local selectLegionNH_Tichondrius_spreadPlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_movePlague, 'BOTTOM', 0, -2, "S Plague")
+selectLegionNH_Tichondrius_spreadPlague:SetScript("OnClick", function() SendChatMessage("Income [Seeker Swarm]! Spread plague group! NEVER DUMP BRAND THIS TIME!!", chatType) end)
+local selectLegionNH_Tichondrius_killAdd = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_spreadPlague, 'BOTTOM', 0, -2, "Kill Add")
+selectLegionNH_Tichondrius_killAdd:SetScript("OnClick", function() SendChatMessage("Kill adds quickly!!", chatType) end)
+local selectLegionNH_Tichondrius_dumpBrand = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_killAdd, 'BOTTOM', 0, -8, "Dump Brand")
+selectLegionNH_Tichondrius_dumpBrand:SetScript("OnClick", function() SendChatMessage("Brand guy, Dump on group", chatType) end)
+local selectLegionNH_Tichondrius_stackCenter = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_dumpBrand, 'BOTTOM', 0, -8, "Stack")
+selectLegionNH_Tichondrius_stackCenter:SetScript("OnClick", function() SendChatMessage("Stack on center but dodge [Carrion Nightmare]", chatType) end)
 
--- 영혼의 아귀
-local selectInstanceMEW = CreateFrame('Frame', 'KBJGroupOrder_Instance_MEW', UIParent)
-selectInstanceMEW:SetSize(100, (24 * #GroupOrderInstanceData["영혼의 아귀"]) - 2)
-selectInstanceMEW:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Krosus
+local selectLegionNH_Krosus = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Krosus', UIParent)
+selectLegionNH_Krosus:SetSize(80, 178)
+selectLegionNH_Krosus:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceMEW = {}
-for i = 1, #GroupOrderInstanceData["영혼의 아귀"] do
-    GroupOrderInstanceMEW[i] = CreateFrame('Button', 'GroupOrderInstanceMEW'..i, selectInstanceMEW, 'OptionsButtonTemplate')
-    GroupOrderInstanceMEW[i]:SetSize(100, 22)
-    GroupOrderInstanceMEW[i]:SetText(GroupOrderInstanceData["영혼의 아귀"][i].name)
-    GroupOrderInstanceMEW[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["영혼의 아귀"][i].msg, chatType) end)
+local selectLegionNH_Krosus_BriefN = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Krosus_BriefN:SetScript("OnClick", function() OutputBrief("Krosus", 1) end)
+local selectLegionNH_Krosus_BriefH = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Krosus_BriefH:SetScript("OnClick", function() OutputBrief("Krosus", 1) end)
+local selectLegionNH_Krosus_BriefM = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Krosus_BriefM:SetScript("OnClick", function() OutputBrief("Krosus", 3) end)
 
-    if i == 1 then GroupOrderInstanceMEW[i]:SetPoint('TOP', selectInstanceMEW, 'TOP', 0, 0)
-    else GroupOrderInstanceMEW[i]:SetPoint('TOP', GroupOrderInstanceMEW[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Krosus_moveLEFT = CreateButton(selectLegionNH_Krosus, 39, 22, 'TOPLEFT', selectLegionNH_Krosus_BriefM, 'BOTTOMLEFT', 0, -8, "<<")
+selectLegionNH_Krosus_moveLEFT:SetScript("OnClick", function() SendChatMessage("<<< Move to the Left", chatType) end)
+local selectLegionNH_Krosus_moveRIGHT = CreateButton(selectLegionNH_Krosus, 39, 22, 'LEFT', selectLegionNH_Krosus_moveLEFT, 'RIGHT', 2, 0, ">>")
+selectLegionNH_Krosus_moveRIGHT:SetScript("OnClick", function() SendChatMessage(">>> Move to the Right", chatType) end)
 
--- 용맹의 전당
-local selectInstanceVoH = CreateFrame('Frame', 'KBJGroupOrder_Instance_VoH', UIParent)
-selectInstanceVoH:SetSize(100, (24 * #GroupOrderInstanceData["용맹의 전당"]) - 2)
-selectInstanceVoH:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local selectLegionNH_Krosus_breakBridge = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOPLEFT', selectLegionNH_Krosus_moveLEFT, 'BOTTOMLEFT', 0, -8, "Bridge")
+selectLegionNH_Krosus_breakBridge:SetScript("OnClick", function() SendChatMessage("Break the Bridge! MOVE BACK!", chatType) end)
+local selectLegionNH_Krosus_incOrb = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_breakBridge, 'BOTTOM', 0, -2, "Orb")
+selectLegionNH_Krosus_incOrb:SetScript("OnClick", function() SendChatMessage("Income [Orb of Destruction]! Check yourself!", chatType) end)
+local selectLegionNH_Krosus_incPitch = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_incOrb, 'BOTTOM', 0, -2, "Pitch")
+selectLegionNH_Krosus_incPitch:SetScript("OnClick", function() SendChatMessage("Income [Burning Pitch]! Check your position!", chatType) end)
+local selectLegionNH_Krosus_killAdd = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_incPitch, 'BOTTOM', 0, -2, "Kill Adds")
+selectLegionNH_Krosus_killAdd:SetScript("OnClick", function() SendChatMessage("Kill Adds! Quickly! but be careful if income beam!", chatType) end)
 
-local GroupOrderInstanceVoH = {}
-for i = 1, #GroupOrderInstanceData["용맹의 전당"] do
-    GroupOrderInstanceVoH[i] = CreateFrame('Button', 'GroupOrderInstanceVoH'..i, selectInstanceVoH, 'OptionsButtonTemplate')
-    GroupOrderInstanceVoH[i]:SetSize(100, 22)
-    GroupOrderInstanceVoH[i]:SetText(GroupOrderInstanceData["용맹의 전당"][i].name)
-    GroupOrderInstanceVoH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["용맹의 전당"][i].msg, chatType) end)
+-- Botanist
+local selectLegionNH_Botanist = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Botanist', UIParent)
+selectLegionNH_Botanist:SetSize(80, 178)
+selectLegionNH_Botanist:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-    if i == 1 then GroupOrderInstanceVoH[i]:SetPoint('TOP', selectInstanceVoH, 'TOP', 0, 0)
-    else GroupOrderInstanceVoH[i]:SetPoint('TOP', GroupOrderInstanceVoH[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Botanist_BriefN = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOP', selectLegionNH_Botanist, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Botanist_BriefN:SetScript("OnClick", function() OutputBrief("Botanist", 1) end)
+local selectLegionNH_Botanist_BriefH = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOP', selectLegionNH_Botanist_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Botanist_BriefH:SetScript("OnClick", function() OutputBrief("Botanist", 2) end)
+local selectLegionNH_Botanist_BriefM = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOP', selectLegionNH_Botanist_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Botanist_BriefM:SetScript("OnClick", function() OutputBrief("Botanist", 3) end)
 
--- 카라잔 올클리어
-local selectInstanceKAA = CreateFrame('Frame', 'KBJGroupOrder_Instance_KAA', UIParent)
-selectInstanceKAA:SetSize(100, (24 * #GroupOrderInstanceData["카라잔 올클리어"]) - 2)
-selectInstanceKAA:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local selectLegionNH_Botanist_orderDispel = CreateInput(selectLegionNH_Botanist, 71, 22, 'TOP', selectLegionNH_Botanist_BriefM, 'BOTTOM', 3, -8, "Dispel")
+local selectLegionNH_Botanist_orderActDispel = CreateButton(selectLegionNH_Botanist, 40, 22, 'RIGHT', selectLegionNH_Botanist_orderDispel, 'LEFT', -9, 0, "Act")
+selectLegionNH_Botanist_orderActDispel:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Botanist_orderDispel:GetText()..", Dispel Lasher NOW!!", chatType) end)
+local selectLegionNH_Botanist_orderBriefDispel = CreateButton(selectLegionNH_Botanist, 22, 22, 'RIGHT', selectLegionNH_Botanist_orderActDispel, 'LEFT', -1, 0, "B")
+selectLegionNH_Botanist_orderBriefDispel:SetScript("OnClick", function() SendChatMessage("Dispel Lasher Healer : "..selectLegionNH_Botanist_orderDispel:GetText(), chatType) end) 
+local selectLegionNH_Botanist_spreadLasher = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOP', selectLegionNH_Botanist_orderDispel, 'BOTTOM', -3, -2, "Lasher")
+selectLegionNH_Botanist_spreadLasher:SetScript("OnClick", function() SendChatMessage("Spreading form target of [Parasitic Fetter]", chatType) end)
+local selectLegionNH_Botanist_killLasher = CreateButton(selectLegionNH_Botanist, 40, 22, 'RIGHT', selectLegionNH_Botanist_spreadLasher, 'LEFT', -1, 0, "Kill")
+selectLegionNH_Botanist_killLasher:SetScript("OnClick", function() SendChatMessage("Kill [Parasitic Lasher]! Quickly!", chatType) end)
 
-local GroupOrderInstanceKAA = {}
-for i = 1, #GroupOrderInstanceData["카라잔 올클리어"] do
-    GroupOrderInstanceKAA[i] = CreateFrame('Button', 'GroupOrderInstanceKAA'..i, selectInstanceKAA, 'OptionsButtonTemplate')
-    GroupOrderInstanceKAA[i]:SetSize(100, 22)
-    GroupOrderInstanceKAA[i]:SetText(GroupOrderInstanceData["카라잔 올클리어"][i].name)
-    GroupOrderInstanceKAA[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["카라잔 올클리어"][i].msg, chatType) end)
+local selectLegionNH_Botanist_orderSphere = CreateInput(selectLegionNH_Botanist, 71, 22, 'TOP', selectLegionNH_Botanist_spreadLasher, 'BOTTOM', 3, -8, "Sphere")
+local selectLegionNH_Botanist_orderActSphere = CreateButton(selectLegionNH_Botanist, 40, 22, 'RIGHT', selectLegionNH_Botanist_orderSphere, 'LEFT', -9, 0, "Act")
+selectLegionNH_Botanist_orderActSphere:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Botanist_orderSphere:GetText()..", Kill Plasma Sphere!!", chatType) end) 
+local selectLegionNH_Botanist_orderBriefSphere = CreateButton(selectLegionNH_Botanist, 22, 22, 'RIGHT', selectLegionNH_Botanist_orderActSphere, 'LEFT', -1, 0, "B")
+selectLegionNH_Botanist_orderBriefSphere:SetScript("OnClick", function() SendChatMessage("Plasma Sphere DPS : "..selectLegionNH_Botanist_orderSphere:GetText(), chatType) end) 
+local selectLegionNH_Botanist_moveOrange = CreateButton(selectLegionNH_Botanist, 26, 22, 'TOPLEFT', selectLegionNH_Botanist_orderSphere, 'BOTTOMLEFT', -7, -2, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_2:12:12|t")
+selectLegionNH_Botanist_moveOrange:SetScript("OnClick", function() SendChatMessage("Tank, Move to the Orange{동그라미}", chatType) end)
+local selectLegionNH_Botanist_moveBlue = CreateButton(selectLegionNH_Botanist, 26, 22, 'LEFT', selectLegionNH_Botanist_moveOrange, 'RIGHT', 1, 0, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:12:12|t")
+selectLegionNH_Botanist_moveBlue:SetScript("OnClick", function() SendChatMessage("Tank, Move to the Blue{네모}", chatType) end)
+local selectLegionNH_Botanist_moveRed = CreateButton(selectLegionNH_Botanist, 26, 22, 'LEFT', selectLegionNH_Botanist_moveBlue, 'RIGHT', 1, 0, "|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_7:12:12|t")
+selectLegionNH_Botanist_moveRed:SetScript("OnClick", function() SendChatMessage("Tank, Move to the Red{가위표}", chatType) end)
 
-    if i == 1 then GroupOrderInstanceKAA[i]:SetPoint('TOP', selectInstanceKAA, 'TOP', 0, 0)
-    else GroupOrderInstanceKAA[i]:SetPoint('TOP', GroupOrderInstanceKAA[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Botanist_callNight = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOPLEFT', selectLegionNH_Botanist_moveOrange, 'BOTTOMLEFT', 0, -8, "Night")
+selectLegionNH_Botanist_callNight:SetScript("OnClick", function() SendChatMessage("Stack on has [Call of Night] player if you are unmarked", chatType) end)
 
--- 카라잔 파멸
-local selectInstanceKAL = CreateFrame('Frame', 'KBJGroupOrder_Instance_KAL', UIParent)
-selectInstanceKAL:SetSize(100, (24 * #GroupOrderInstanceData["카라잔 파멸"]) - 2)
-selectInstanceKAL:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- StarAugur
+local selectLegionNH_StarAugur = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_StarAugur', UIParent)
+selectLegionNH_StarAugur:SetSize(80, 178)
+selectLegionNH_StarAugur:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceKAL = {}
-for i = 1, #GroupOrderInstanceData["카라잔 파멸"] do
-    GroupOrderInstanceKAL[i] = CreateFrame('Button', 'GroupOrderInstanceKAL'..i, selectInstanceKAL, 'OptionsButtonTemplate')
-    GroupOrderInstanceKAL[i]:SetSize(100, 22)
-    GroupOrderInstanceKAL[i]:SetText(GroupOrderInstanceData["카라잔 파멸"][i].name)
-    GroupOrderInstanceKAL[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderInstanceData["카라잔 파멸"][i].msg, chatType) end)
+local selectLegionNH_StarAugur_BriefN = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur, 'TOP', 0, 0, "Brief N")
+selectLegionNH_StarAugur_BriefN:SetScript("OnClick", function() OutputBrief("StarAugur", 1) end)
+local selectLegionNH_StarAugur_BriefH = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_StarAugur_BriefH:SetScript("OnClick", function() OutputBrief("StarAugur", 2) end)
+local selectLegionNH_StarAugur_BriefM = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_StarAugur_BriefM:SetScript("OnClick", function() OutputBrief("StarAugur", 3) end)
 
-    if i == 1 then GroupOrderInstanceKAL[i]:SetPoint('TOP', selectInstanceKAL, 'TOP', 0, 0)
-    else GroupOrderInstanceKAL[i]:SetPoint('TOP', GroupOrderInstanceKAL[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_StarAugur_stackGR = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_BriefM, 'BOTTOM', 0, -8, "Stack 1")
+selectLegionNH_StarAugur_stackGR:SetScript("OnClick", function() SendChatMessage("Stack on your group", chatType) end)
+local selectLegionNH_StarAugur_spreadNow = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_stackGR, 'BOTTOM', 0, -2, "Spread 2")
+selectLegionNH_StarAugur_spreadNow:SetScript("OnClick", function() SendChatMessage("Spread for phase 2", chatType) end)
+local selectLegionNH_StarAugur_killAdd = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_spreadNow, 'BOTTOM', 0, -2, "Kill Add")
+selectLegionNH_StarAugur_killAdd:SetScript("OnClick", function() SendChatMessage("Kill Big Add! Quickly!", chatType) end)
+local selectLegionNH_StarAugur_turnAdd = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_killAdd, 'BOTTOM', 0, -2, "Witness")
+selectLegionNH_StarAugur_turnAdd:SetScript("OnClick", function() SendChatMessage("Income [Witness the Void]. Turn away from the big add!", chatType) end)
 
----
+-- Elisande
+local selectLegionNH_Elisande = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Elisande', UIParent)
+selectLegionNH_Elisande:SetSize(80, 178)
+selectLegionNH_Elisande:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
--- 에메랄드의 악몽
-local selectRaidNoE = CreateFrame('Frame', 'KBJGroupOrder_Raid_NoE', UIParent)
-selectRaidNoE:SetSize(100, (24 * #GroupOrderRaidData["에메랄드의 악몽"]) - 2)
-selectRaidNoE:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local selectLegionNH_Elisande_BriefN = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Elisande_BriefN:SetScript("OnClick", function() OutputBrief("Elisande", 1) end)
+local selectLegionNH_Elisande_BriefH = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Elisande_BriefH:SetScript("OnClick", function() OutputBrief("Elisande", 2) end)
+local selectLegionNH_Elisande_BriefM = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Elisande_BriefM:SetScript("OnClick", function() OutputBrief("Elisande", 3) end)
 
-local GroupOrderRaidNoE = {}
-for i = 1, #GroupOrderRaidData["에메랄드의 악몽"] do
-    GroupOrderRaidNoE[i] = CreateFrame('Button', 'GroupOrderRaidNoE'..i, selectRaidNoE, 'OptionsButtonTemplate')
-    GroupOrderRaidNoE[i]:SetSize(100, 22)
-    GroupOrderRaidNoE[i]:SetText(GroupOrderRaidData["에메랄드의 악몽"][i].name)
-    GroupOrderRaidNoE[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["에메랄드의 악몽"][i].msg, chatType) end)
+local selectLegionNH_Elisande_dontMove = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_BriefM, 'BOTTOM', 0, -8, "No Move")
+selectLegionNH_Elisande_dontMove:SetScript("OnClick", function() SendChatMessage("Don't move when targeted [Delphuric Beam]", chatType) end)
+local selectLegionNH_Elisande_soak = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_dontMove, 'BOTTOM', 0, -2, "Soak")
+selectLegionNH_Elisande_soak:SetScript("OnClick", function() SendChatMessage("GR5 soak [Epocheric Orb]!!", chatType) end)
+local selectLegionNH_Elisande_focusSkull = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_soak, 'BOTTOM', 0, -8, "Focus |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:12:12|t")
+selectLegionNH_Elisande_focusSkull:SetScript("OnClick", function() SendChatMessage("FOCUS SKULL{해골}!!!!", chatType) end)
 
-    if i == 1 then GroupOrderRaidNoE[i]:SetPoint('TOP', selectRaidNoE, 'TOP', 0, 0)
-    else GroupOrderRaidNoE[i]:SetPoint('TOP', GroupOrderRaidNoE[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Elisande_moveAdd = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_focusSkull, 'BOTTOM', 0, -8, "Move Add")
+selectLegionNH_Elisande_moveAdd:SetScript("OnClick", function() SendChatMessage("Tank, Move to the [Recursive Elementals]!!", chatType) end)
+local selectLegionNH_Elisande_doubleRingA = CreateButton(selectLegionNH_Elisande, 39, 22, 'TOPLEFT', selectLegionNH_Elisande_moveAdd, 'BOTTOMLEFT', 0, -2, "1/2")
+selectLegionNH_Elisande_doubleRingA:SetScript("OnClick", function() SendChatMessage("1st of Double Ring", chatType) end)
+local selectLegionNH_Elisande_doubleRingB = CreateButton(selectLegionNH_Elisande, 39, 22, 'LEFT', selectLegionNH_Elisande_doubleRingA, 'RIGHT', 2, 0, "2/2")
+selectLegionNH_Elisande_doubleRingB:SetScript("OnClick", function() SendChatMessage("2nd of Double Ring", chatType) end)
+local selectLegionNH_Elisande_singleRing = CreateButton(selectLegionNH_Elisande, 39, 22, 'RIGHT', selectLegionNH_Elisande_doubleRingA, 'LEFT', -2, 0, "1")
+selectLegionNH_Elisande_singleRing:SetScript("OnClick", function() SendChatMessage("Single Ring", chatType) end)
 
--- 용맹의 시험
-local selectInstanceToH = CreateFrame('Frame', 'KBJGroupOrder_Raid_ToH', UIParent)
-selectInstanceToH:SetSize(100, (24 * #GroupOrderRaidData["용맹의 시험"]) - 2)
-selectInstanceToH:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+-- Guldan
+local selectLegionNH_Guldan = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Guldan', UIParent)
+selectLegionNH_Guldan:SetSize(80, 178)
+selectLegionNH_Guldan:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 
-local GroupOrderInstanceToH = {}
-for i = 1, #GroupOrderRaidData["용맹의 시험"] do
-    GroupOrderInstanceToH[i] = CreateFrame('Button', 'GroupOrderInstanceToH'..i, selectInstanceToH, 'OptionsButtonTemplate')
-    GroupOrderInstanceToH[i]:SetSize(100, 22)
-    GroupOrderInstanceToH[i]:SetText(GroupOrderRaidData["용맹의 시험"][i].name)
-    GroupOrderInstanceToH[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["용맹의 시험"][i].msg, chatType) end)
+local selectLegionNH_Guldan_BriefN = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan, 'TOP', 0, 0, "Brief N")
+selectLegionNH_Guldan_BriefN:SetScript("OnClick", function() OutputBrief("Guldan", 1) end)
+local selectLegionNH_Guldan_BriefH = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_BriefN, 'BOTTOM', 0, -2, "Brief H")
+selectLegionNH_Guldan_BriefH:SetScript("OnClick", function() OutputBrief("Guldan", 2) end)
+local selectLegionNH_Guldan_BriefM = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_BriefH, 'BOTTOM', 0, -2, "Brief M")
+selectLegionNH_Guldan_BriefM:SetScript("OnClick", function() OutputBrief("Guldan", 3) end)
 
-    if i == 1 then GroupOrderInstanceToH[i]:SetPoint('TOP', selectInstanceToH, 'TOP', 0, 0)
-    else GroupOrderInstanceToH[i]:SetPoint('TOP', GroupOrderInstanceToH[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Guldan_Efflux = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_BriefM, 'BOTTOM', 0, -8, "Efflux")
+selectLegionNH_Guldan_Efflux:SetScript("OnClick", function() SendChatMessage("Income [Fel Efflux]!!", chatType) end)
 
--- 밤의 요새
-local selectInstanceHoN = CreateFrame('Frame', 'KBJGroupOrder_Raid_HoN', UIParent)
-selectInstanceHoN:SetSize(100, (24 * #GroupOrderRaidData["밤의 요새"]) - 2)
-selectInstanceHoN:SetPoint('TOP', mainFrame, 'BOTTOM', 0, -8)
+local selectLegionNH_Guldan_orderInterruptA = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_Efflux, 'BOTTOM', 3, -8, "ranged")
+local selectLegionNH_Guldan_orderInterruptB = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderInterruptA, 'BOTTOM', 0, -2, "melee")
+local selectLegionNH_Guldan_orderInterruptC = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderInterruptB, 'BOTTOM', 0, -2, "other")
 
-local GroupOrderInstanceHoN = {}
-for i = 1, #GroupOrderRaidData["밤의 요새"] do
-    GroupOrderInstanceHoN[i] = CreateFrame('Button', 'GroupOrderInstanceHoN'..i, selectInstanceHoN, 'OptionsButtonTemplate')
-    GroupOrderInstanceHoN[i]:SetSize(100, 22)
-    GroupOrderInstanceHoN[i]:SetText(GroupOrderRaidData["밤의 요새"][i].name)
-    GroupOrderInstanceHoN[i]:SetScript("OnClick", function() SendChatMessage(GroupOrderRaidData["밤의 요새"][i].msg, chatType) end)
+local selectLegionNH_Guldan_orderActInterruptA = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderInterruptA, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActInterruptA:SetScript("OnClick", function() SendChatMessage("Next interrupt to big add : "..selectLegionNH_Guldan_orderInterruptA:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderActInterruptB = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderInterruptB, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActInterruptB:SetScript("OnClick", function() SendChatMessage("Next interrupt to big add : "..selectLegionNH_Guldan_orderInterruptB:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderActInterruptC = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderInterruptC, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActInterruptC:SetScript("OnClick", function() SendChatMessage("Next interrupt to big add : "..selectLegionNH_Guldan_orderInterruptC:GetText(), chatType) end) 
 
-    if i == 1 then GroupOrderInstanceHoN[i]:SetPoint('TOP', selectInstanceHoN, 'TOP', 0, 0)
-    else GroupOrderInstanceHoN[i]:SetPoint('TOP', GroupOrderInstanceHoN[i-1], 'BOTTOM', 0, -2)
-    end
-end
+local selectLegionNH_Guldan_orderBriefInterruptA = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActInterruptA, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefInterruptA:SetScript("OnClick", function() SendChatMessage("1st interrupt to big add : "..selectLegionNH_Guldan_orderInterruptA:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderBriefInterruptB = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActInterruptB, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefInterruptB:SetScript("OnClick", function() SendChatMessage("2nd interrupt to big add : "..selectLegionNH_Guldan_orderInterruptB:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderBriefInterruptC = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActInterruptC, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefInterruptC:SetScript("OnClick", function() SendChatMessage("3rd interrupt to big add : "..selectLegionNH_Guldan_orderInterruptC:GetText(), chatType) end) 
 
----
+local selectLegionNH_Guldan_Bonds = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_orderInterruptC, 'BOTTOM', -3, -2, "Bonds")
+selectLegionNH_Guldan_Bonds:SetScript("OnClick", function() SendChatMessage("Help to Bonds!!!", chatType) end)
+local selectLegionNH_Guldan_Eyes = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_Bonds, 'BOTTOM', 0, -2, "Eyes")
+selectLegionNH_Guldan_Eyes:SetScript("OnClick", function() SendChatMessage("Kill Eyes! Quickly!", chatType) end)
+local selectLegionNH_Guldan_stayAway = CreateButton(selectLegionNH_Guldan, 40, 46, 'TOPRIGHT', selectLegionNH_Guldan_Bonds, 'TOPLEFT', -2, 0, "Stay\nAway")
+selectLegionNH_Guldan_stayAway:SetScript("OnClick", function() SendChatMessage("Stay away from tank!", chatType) end)
 
-function selectTypeInstanceItem(item)
-    KBJGroupOrder_Instance:Hide()
+local selectLegionNH_Guldan_orderHealA = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_Eyes, 'BOTTOM', 3, -2, "1st")
+local selectLegionNH_Guldan_orderHealB = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderHealA, 'BOTTOM', 0, -2, "2nd")
+local selectLegionNH_Guldan_orderHealC = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderHealB, 'BOTTOM', 0, -2, "3rd")
+local selectLegionNH_Guldan_orderHealD = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderHealC, 'BOTTOM', 0, -2, "4rd")
 
-    if item == "감시관의 금고" then
-        KBJGroupOrder_Instance_VoW:Show()
-    elseif item == "검은 떼까마귀" then
-        KBJGroupOrder_Instance_BRH:Show()
-    elseif item == "넬타리온의 둥지" then
-        KBJGroupOrder_Instance_NEL:Show()
-    elseif item == "별의 궁정" then
-        KBJGroupOrder_Instance_CoS:Show()
-    elseif item == "비전로" then
-        KBJGroupOrder_Instance_ARC:Show()
-    elseif item == "아즈샤라의 눈" then
-        KBJGroupOrder_Instance_EoA:Show()
-    elseif item == "어둠심장 숲" then
-        KBJGroupOrder_Instance_DHT:Show()
-    elseif item == "영혼의 아귀" then
-        KBJGroupOrder_Instance_MEW:Show()
-    elseif item == "용맹의 전당" then
-        KBJGroupOrder_Instance_VoH:Show()
-    elseif item == "카라잔 올클리어" then
-        KBJGroupOrder_Instance_KAA:Show()
-    elseif item == "카라잔 파멸" then
-        KBJGroupOrder_Instance_KAL:Show()
-    end
-end
+local selectLegionNH_Guldan_orderActHealA = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealA, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActHealA:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealA:GetText().." UP plz!!!!", chatType) end) 
+local selectLegionNH_Guldan_orderActHealB = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealB, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActHealB:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealB:GetText().." UP plz!!!!", chatType) end) 
+local selectLegionNH_Guldan_orderActHealC = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealC, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActHealC:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealC:GetText().." UP plz!!!!", chatType) end) 
+local selectLegionNH_Guldan_orderActHealD = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealD, 'LEFT', -9, 0, "Act")
+selectLegionNH_Guldan_orderActHealD:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealD:GetText().." UP plz!!!!", chatType) end) 
 
----
+local selectLegionNH_Guldan_orderBriefHealA = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealA, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefHealA:SetScript("OnClick", function() SendChatMessage("1st Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealA:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderBriefHealB = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealB, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefHealB:SetScript("OnClick", function() SendChatMessage("2nd Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealB:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderBriefHealC = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealC, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefHealC:SetScript("OnClick", function() SendChatMessage("3rd Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealC:GetText(), chatType) end) 
+local selectLegionNH_Guldan_orderBriefHealD = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealD, 'LEFT', -1, 0, "B")
+selectLegionNH_Guldan_orderBriefHealD:SetScript("OnClick", function() SendChatMessage("4rd Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealD:GetText(), chatType) end) 
 
-function selectTypeRaidItem(item)
-    KBJGroupOrder_Raid:Hide()
+local selectLegionNH_Guldan_stack = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_orderHealD, 'BOTTOM', -3, -2, "Stack |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:12:12|t")
+selectLegionNH_Guldan_stack:SetScript("OnClick", function() SendChatMessage("Stack on Moon{달} for healer's cooldowns spell", chatType) end)
+local selectLegionNH_Guldan_Souls = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_stack, 'BOTTOM', 0, -2, "Souls")
+selectLegionNH_Guldan_Souls:SetScript("OnClick", function() SendChatMessage("Remove the souls! Hurry up!", chatType) end)
 
-    if item == "에메랄드의 악몽" then
-        KBJGroupOrder_Raid_NoE:Show()
-    elseif item == "용맹의 시험" then
-        KBJGroupOrder_Raid_ToH:Show()
-    elseif item == "밤의 요새" then
-        KBJGroupOrder_Raid_HoN:Show()
-    end
-end
+---------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------
+ClearFrameAll()
 
----
-
-KBJGroupOrder_Type:Hide()
-KBJGroupOrder_Instance:Hide()
-KBJGroupOrder_Raid:Hide()
-
-KBJGroupOrder_Instance_VoW:Hide()
-KBJGroupOrder_Instance_BRH:Hide()
-KBJGroupOrder_Instance_NEL:Hide()
-KBJGroupOrder_Instance_CoS:Hide()
-KBJGroupOrder_Instance_ARC:Hide()
-KBJGroupOrder_Instance_EoA:Hide()
-KBJGroupOrder_Instance_DHT:Hide()
-KBJGroupOrder_Instance_MEW:Hide()
-KBJGroupOrder_Instance_VoH:Hide()
-KBJGroupOrder_Instance_KAA:Hide()
-KBJGroupOrder_Instance_KAL:Hide()
-
-KBJGroupOrder_Raid_NoE:Hide()
-KBJGroupOrder_Raid_ToH:Hide()
-KBJGroupOrder_Raid_HoN:Hide()
+-- todo
+-- DBM 연동 / 또는 직접 이벤트 체크해서 자동 메세징(따로 누르기 정신 사납다)

@@ -1,123 +1,300 @@
-GroupOrderInstanceName = {
-	"감시관의 금고",
-	"검은 떼까마귀",
-	"넬타리온의 둥지",
-	"별의 궁정",
-	"비전로",
-	"아즈샤라의 눈",
-	"어둠심장 숲",
-	"영혼의 아귀",
-	"용맹의 전당",
-	"카라잔 올클리어",	
-	"카라잔 파멸",
+GroupOrderType = {
+	"Keystone",
+	"Nightmare",
+	"ToV",
+	"Nighthold",
 }
 
-GroupOrderRaidName = {
-	"에메랄드의 악몽",
-	"용맹의 시험",
-	"밤의 요새",
-}
-
-GroupOrderInstanceData = {
-	["감시관의 금고"] = {
+GroupOrderTypeData = {
+	["Keystone"] = {
 		[1] = {
-			name = "사전 브리핑",
-			msg = "We skip the 1st Mini-Boss. Follow Tank after kill 2 packs of trash"
-			-- 우리는 첫번째 미니 보스는 패스 할 것이다. 처음 2무리 잡고 탱커 따라와라
+			name = "1 Pack",
+			msg = "Pulling 1 Pack!",
 		},
 		[2] = {
-			name = "미니보스 직후",
-			msg = "Interrupt [Nightmares] [Unleash Fury] if you could. Quickly dispel [Nightmares] if don't interrupt that"
-			-- 악몽/격노 차단해라. 만약 악몽 차단 안되면 디스펠 해달라
+			name = "2 Pack",
+			msg = "Pulling 2 Pack!",
 		},
 		[3] = {
-			name = "심문관 계단위",
-			msg = "We fight upstair. Follow Tank for los when middle phase"
-			-- 계단 위에서 싸울거다. 사잇 페이즈때 시야를 빼야하니 탱커 따라 다녀라.
-		},
-		[4] = {
-			name = "심문관 계단아래",
-			msg = "We fight downstair. cuz we have huge AOE damage. so be careful [Inquisitive Stare]"
-			-- 계단 아래서 싸울거다. 우리 광딜이 쎼서 충분하다. 대신 시야 조심해라
+			name = "Big Pull",
+			msg = "Be Careful! Big Pull is Coming!",
 		},
 	},
-
-	["검은 떼까마귀"] = {
+	["Nightmare"] = {
+		"Nythendra", "Ursoc", "Dragons", "Ilgynoth", "Elerethe", "Cenarius", "Xavius"
 	},
-
-	["넬타리온의 둥지"] = {
+	["ToV"] = {
+		"Odyn", "Guarm", "Helya"
 	},
-
-	["별의 궁정"] = {
-	},
-
-	["보라빛 요새 침공"] = {
-	},
-
-	["비전로"] = {
-	},
-
-	["아즈샤라의 눈"] = {
-	},
-
-	["어둠심장 숲"] = {
-		[1] = {
-			name = "사전 브리핑",
-			msg = "We skip lots trash. Please follow tank and be careful ADD"
-			-- 우리는 많은 잡몹을 패스할 것이다. 그러니 탱커 잘 따라오고 애드 조심해라.
-		},
-		[2] = {
-			name = "알방 입구",
-			msg = "Be careful EGG. DO NOT BREAK IT!"
-			-- 알 밟지 않도록 조심해라.
-		},
-		[3] = {
-			name = "술사 윤회 확인",
-			msg = "shamy, do you have Reincarnation?"
-			-- 샤미, 너 윤회 남아있냐?
-		},
-		[4] = {
-			name = "데스런 : 운회",
-			msg = "We'll' death-run to boss room. don't release."
-			-- 보스방 까지 데스런 한다. don't release. 전투가 완전히 풀린 것을 확인하고 윤회를 써라
-		},		
-		[5] = {
-			name = "전부 확인",
-			msg = "anyone remain brez?"
-			-- 전부 가지고 있는 사람?
-		},
-		[6] = {
-			name = "데스런 : 전부",
-			msg = "We'll' death-run to boss room. don't release. brez target is tank. right?"
-			-- 보스방 까지 데스런 한다. don't release. 죽기전에 태엌에게 전부를 걸어라.
-		},
-		[7] = {
-			name = "데스런 : 기공",
-			msg = "We'll' death-run to boss room. don't release. die on tank's position. right?"
-			-- 보스방 까지 데스런 한다. don't release. 죽기전에 태엌에게 전부를 걸어라.
-		},
-	},
-
-	["영혼의 아귀"] = {
-	},
-
-	["용맹의 전당"] = {
-	},
-
-	["카라잔 올클리어"] = {
-	},
-
-	["카라잔 파멸"] = {
+	["Nighthold"] = {
+		"Skorpyron", "Chronomatic", "Trilliax", "Spellblade", "Tichondrius", "Krosus", "Botanist", "StarAugur", "Elisande", "Guldan"
 	},
 }
 
-GroupOrderRaidData = {
-	["에메랄드의 악몽"] = {
+GroupOrderLegionNH = {
+	["Skorpyron"] = {
+		[1] = {
+			[1] = "This boss is super easy",
+			[2] = "Just dodge [Focused Blast] and hide behind SHARD during [Shockwave]",
+			[3] = "We'll block the cave and keeping cleave for Logger",
+			[4] = "Lust on the pull. Any question?",
+		},
+		[2] = {
+			[1] = "This boss is super easy",
+			[2] = "Just dodge [Focused Blast] and hide behind SHARD during [Shockwave]",
+			[3] = "We'll block the cave and keeping cleave for Logger",
+			[4] = "Lust on the pull. Any question?",
+		},
+		[3] = {
+			[1] = "Dodge [Focused Blast] and hide behind shard during [Shockwave]",
+			[2] = "Avoid that first if so busy or cat on fire! NEVER HIT THAT!!!",
+			[3] = "We'll block the cave and keeping cleave for Log player",
+			[4] = "Lust on 1st [Exoskeletal Vulnerability]. Any question?",
+		},
 	},
-
-	["용맹의 시험"] = {
+	["Chronomatic"] = {
+		[1] = {
+			[1] = "Dodge [Temporal Orbs] and Interrupt Add's cast of [Warp Nightwell]",
+			[2] = "Get away from the group when have debuff [Time Bomb]. DON'T FORGOT IT! GET OUT THE GROUP!",
+			[3] = "Stack on Moon{달} when [Power Overwhelming] phase for healer's cooldowns spell",
+			[4] = "Lust on killed Big Add(pop small add)",
+		},
+		[2] = {
+			[1] = "Dodge [Temporal Orbs] and Interrupt Add's cast of [Warp Nightwell]",
+			[2] = "Get away from the group when have debuff [Time Bomb]. DON'T FORGOT IT! GET OUT THE GROUP!",
+			[3] = "Stack on Moon{달} when [Power Overwhelming] phase for healer's cooldowns spell",
+			[4] = "Lust on killed Big Add(pop small add)",
+		},
+		[3] = {
+			[1] = "Dodge [Temporal Orbs] and Interrupt Add's cast of [Warp Nightwell]",
+			[2] = "Get away from the group when have debuff [Time Bomb]. DON'T FORGOT IT! GET OUT THE GROUP!",
+			[3] = "Stack on Moon{달} when [Power Overwhelming] phase for healer's cooldowns spell",
+			[4] = "Lust on killed Big Add(pop small add)",
+		},
 	},
-
-	["밤의 요새"] = {
+	["Trilliax"] = {
+		[1] = {
+			[1] = "CAKE CAKE CAKE!! DO NOT LEAVE A CAKE! NEVER!",
+			[2] = "SOAK SOAK SOAK!! Soak the [Scrubber] when cast of [Cleansing Destruction]! This is TOP PRIORITY!",
+			[3] = "Don't Die on [Annihilation] when maniac phase / Move to the left-side of the boss if u get link",
+			[4] = "Dodge [Arcane Seepage] pools for healer",
+			[5] = "Lust on the pull. Any question?",
+		},
+		[2] = {
+			[1] = "CAKE CAKE CAKE!! DO NOT LEAVE A CAKE! NEVER!",
+			[2] = "SOAK SOAK SOAK!! Soak the [Scrubber] when cast of [Cleansing Destruction]! This is TOP PRIORITY!",
+			[3] = "Don't Die on [Annihilation] when maniac phase / Move to the left-side of the boss if u get link",
+			[4] = "Dodge [Arcane Seepage] pools for healer",
+			[5] = "Lust on the pull. Any question?",
+		},
+		[3] = {
+			[1] = "CAKE CAKE CAKE!! DO NOT LEAVE A CAKE! NEVER!",
+			[2] = "SOAK SOAK SOAK!! Soak the [Scrubber] when cast of [Cleansing Destruction]! This is TOP PRIORITY!",
+			[3] = "Don't Die on [Annihilation] when maniac phase / Move to the left-side of the boss if u get link",
+			[4] = "Dodge [Arcane Seepage] pools for healer",
+			[5] = "Lust on the pull. Any question?",
+		},
+	},
+	["Spellblade"] = {
+		[1] = {
+			[1] = "Frost Phase : Move to the rainbow worldmark when u get [Mark of Frost]",
+			[2] = "Frost Phase : Dump at 8stacks. Just hold on less 8stacks",
+			[3] = "Fire Phase : Fire Spawnner, 8 yards apart. Don't stay close each other",
+			[5] = "Arcane Phase : Stack on Moon{달} worldmark when finish summon [Arcane Orb]",
+			[6] = "Arcane Phase : and Move to Skull{해골} worldmark when detonate. Using you're deffensive CD in here",
+			[7] = "Lust on pop arcane adds. Any question?",
+		},
+		[2] = {
+			[1] = "Frost Phase : Move to the rainbow worldmark when u get [Mark of Frost]",
+			[2] = "Frost Phase : Dump at 8stacks. Just hold on less 8stacks",
+			[3] = "Fire Phase : Fire Spawnner, 8 yards apart. Don't stay close each other",
+			[4] = "Fire Phase : Fire adds are stunnable, interruptable. So interrupt the [Pyroblast] casts always",
+			[5] = "Arcane Phase : Stack on Moon{달} worldmark when finish summon [Arcane Orb]",
+			[6] = "Arcane Phase : and Move to Skull{해골} worldmark when detonate. Using you're deffensive CD in here",
+			[7] = "Lust on pop arcane adds. Any question?",
+		},
+		[3] = {
+			[1] = "Frost Phase : Move to the rainbow worldmark when u get [Mark of Frost]",
+			[2] = "Frost Phase : Dump at 8stacks. Just hold on less 8stacks",
+			[3] = "Fire Phase : Fire Spawnner, 8 yards apart. Don't stay close each other",
+			[4] = "Fire Phase : Fire adds are stunnable, interruptable. So interrupt the [Pyroblast] casts always",
+			[5] = "Arcane Phase : Stack on Moon{달} worldmark when finish summon [Arcane Orb]",
+			[6] = "Arcane Phase : and Move to Skull{해골} worldmark when detonate. Using you're deffensive CD in here",
+			[7] = "Lust on pop arcane adds. Any question?",
+		},
+	},
+	["Tichondrius"] = {
+		[1] = {
+			[1] = "[Carrion Plague] on purple side / clean on blue side",
+			[2] = "Kill blood with clean melee dps everytime. don't follow blood if U got plague",
+			[3] = "Potentially spreading when income [Seeker Swarm]",
+			[4] = "Never dump [Brand of Argus] all together. just wait healup group",
+			[5] = "Prioritize killing [Sightless Watcher] and [Felsworn Spellguard]! THIS IS SO IMPORTANT!",
+			[6] = "Lust on end 1st Night. Any question?",
+		},
+		[2] = {
+			[1] = "[Carrion Plague] on purple side / clean on blue side",
+			[2] = "Kill blood with clean melee dps everytime. don't follow blood if U got plague",
+			[3] = "Potentially spreading when income [Seeker Swarm]",
+			[4] = "Never dump [Brand of Argus] all together. just wait healup group",
+			[5] = "Prioritize killing [Sightless Watcher] and [Felsworn Spellguard]! THIS IS SO IMPORTANT!",
+			[6] = "Lust on end 1st Night. Any question?",
+		},
+		[3] = {
+			[1] = "[Carrion Plague] on purple side / clean on blue side",
+			[2] = "Kill blood with clean melee dps everytime. don't follow blood if U got plague",
+			[3] = "Potentially spreading when income [Seeker Swarm]",
+			[4] = "Never dump [Brand of Argus] all together. just wait healup group",
+			[5] = "Prioritize killing [Sightless Watcher] and [Felsworn Spellguard]! THIS IS SO IMPORTANT!",
+			[6] = "Lust on end 1st Night. Any question?",
+		},
+	},
+	["Krosus"] = {
+		[1] = {
+			[1] = "Group 1/3/5, [Burning Pitch] on Yellow side",
+			[2] = "Group 2/4/6, [Burning Pitch] on Red side",
+			[3] = "[Orb of Destruction] on Blue or Green. Check direction of [Fel Beam]",
+			[4] = "Don't DIE from [Fel Beam] or break the bridge. NEVER!",
+			[5] = "Prioritize killing [Burning Ember] when don't stand on pitch. THIS IS SO IMPORTANT!",
+			[6] = "Lust on the pull. Any question?",
+		},
+		[2] = {
+			[1] = "Group 1/3/5, [Burning Pitch] on Yellow side",
+			[2] = "Group 2/4/6, [Burning Pitch] on Red side",
+			[3] = "[Orb of Destruction] on Blue or Green. Check direction of [Fel Beam]",
+			[4] = "Don't DIE from [Fel Beam] or break the bridge. NEVER!",
+			[5] = "Prioritize killing [Burning Ember] when don't stand on pitch. THIS IS SO IMPORTANT!",
+			[6] = "Lust on the pull. Any question?",
+		},
+		[3] = {
+			[1] = "Group 1/3/5, [Burning Pitch] on Yellow side",
+			[2] = "Group 2/4/6, [Burning Pitch] on Red side",
+			[3] = "[Orb of Destruction] on Blue or Green. Check direction of [Fel Beam]",
+			[4] = "Don't DIE from [Fel Beam] or break the bridge. NEVER!",
+			[5] = "Prioritize killing [Burning Ember] when don't stand on pitch. THIS IS SO IMPORTANT!",
+			[6] = "Lust on the pull. Any question?",
+		},
+	},
+	["Botanist"] = {
+		[1] = {
+			[1] = "Avoid [Solar Collapse] and [Controlled Chaos]",
+			[2] = "Don't dispel [Parasitic Fetter] and spreading form target of [Parasitic Fetter]",
+			[3] = "Prioritize killing [Parasitic Lasher]! THIS IS SO IMPORTANT!",
+			[4] = "Don't attack [Plasma Spheres]! DON'T FORGOT IT!",
+			[5] = "Stack on has [Call of Night] player if you are unmarked",
+			[6] = "Lust on pop three boss all",
+		},
+		[2] = {
+			[1] = "Avoid [Solar Collapse] and [Controlled Chaos]",
+			[2] = "Don't dispel [Parasitic Fetter] and spreading from target of [Parasitic Fetter]",
+			[3] = "Prioritize killing [Parasitic Lasher]! THIS IS SO IMPORTANT!",
+			[4] = "Don't attack [Plasma Sphere]! DON'T FORGOT IT!",
+			[5] = "Stack on has [Call of Night] player if you are unmarked",
+			[6] = "Lust on pop three boss all",
+		},
+		[3] = {
+			[1] = "Avoid [Solar Collapse] and [Controlled Chaos]",
+			[2] = "Don't dispel [Parasitic Fetter] and spreading form target of [Parasitic Fetter]",
+			[3] = "Prioritize killing [Parasitic Lasher]! THIS IS SO IMPORTANT!",
+			[4] = "Don't attack [Plasma Spheres]! DON'T FORGOT IT!",
+			[5] = "Stack on has [Call of Night] player if you are unmarked",
+			[6] = "Lust on pop three boss all",
+		},
+	},
+	["StarAugur"] = {
+		[1] = {
+			[1] = "Group 1/3/5, Stack on Blue",
+			[2] = "Group 2/4/6, Stack on Orange",
+			[3] = "Everybody stack when phase 1. but Spreading when phase 2",
+			[4] = "Get away from the group when have debuff [Icy Ejection] / [Felflame]. DON'T FORGOT IT! GET OUT THE GROUP!",
+			[5] = "Prioritize killing 1st big add and when phase 3 and Just focus boss killed that",
+			[6] = "Turn away from the big add when it casts [Witness the Void] everytime",			
+			[7] = "Lust on pop big add when 3rd phase. Any question?",
+		},
+		[2] = {
+			[1] = "Group 1/3/5, Stack on Blue",
+			[2] = "Group 2/4/6, Stack on Orange",
+			[3] = "Everybody stack when phase 1. but Spreading when phase 2",
+			[4] = "Get away from the group when have debuff [Icy Ejection] / [Felflame]. DON'T FORGOT IT! GET OUT THE GROUP!",
+			[5] = "Prioritize killing 1st big add and when phase 3 and Just focus boss killed that",
+			[6] = "Turn away from the big add when it casts [Witness the Void] everytime",			
+			[7] = "Lust on pop big add when 3rd phase. Any question?",
+		},
+		[3] = {
+			[1] = "Group 1/3/5, Stack on Blue",
+			[2] = "Group 2/4/6, Stack on Orange",
+			[3] = "Everybody stack when phase 1. but Spreading when phase 2",
+			[4] = "Get away from the group when have debuff [Icy Ejection] / [Felflame]. DON'T FORGOT IT! GET OUT THE GROUP!",
+			[5] = "Prioritize killing 1st big add and when phase 3 and Just focus boss killed that",
+			[6] = "Turn away from the big add when it casts [Witness the Void] everytime",			
+			[7] = "Lust on pop big add when 3rd phase. Any question?",
+		},
+	},
+	["Elisande"] = {
+		[1] = {
+			[1] = "Phase ALL : Don't die from [Arcanetic Ring]!! / Keep on [Fast Time] buff when possible",
+			[2] = "Phase ALL : Prioritize killing [Recursive Elementals]! THIS IS SO IMPORTANT!",
+			[3] = "Phase 1 : Interrupt add's cast of [Exothermic Release] and [Blast]",
+			[4] = "Phase 2 : Phase 1 work + GR5 soak [Epocheric Orb] / Don't move when targeted [Delphuric Beam] but do not overlap",
+			[5] = "Phase 3 : Phase 2 work + Interrupt boss's cast of [Ablative Pulse]!",
+			[6] = "Phase 3 : Never explosion [Conflexive Burst] all together. You gave time to healer used Fast/Slow Time Zone",
+			[7] = "Lust on the pull. Any question?",
+		},
+		[2] = {
+			[1] = "Phase ALL : Don't die from [Arcanetic Ring]!! / Keep on [Fast Time] buff when possible",
+			[2] = "Phase ALL : Prioritize killing [Recursive Elementals]! THIS IS SO IMPORTANT!",
+			[3] = "Phase 1 : Interrupt add's cast of [Exothermic Release] and [Blast]",
+			[4] = "Phase 2 : Phase 1 work + GR5 soak [Epocheric Orb] / Don't move when targeted [Delphuric Beam] but do not overlap",
+			[5] = "Phase 3 : Phase 2 work + Interrupt boss's cast of [Ablative Pulse]!",
+			[6] = "Phase 3 : Never explosion [Conflexive Burst] all together. You gave time to healer used Fast/Slow Time Zone",
+			[7] = "Lust on the pull. Any question?",
+		},
+		[3] = {
+			[1] = "Phase ALL : Don't die from [Arcanetic Ring]!! / Keep on [Fast Time] buff when possible",
+			[2] = "Phase ALL : Prioritize killing [Recursive Elementals]! THIS IS SO IMPORTANT!",
+			[3] = "Phase 1 : Interrupt add's cast of [Exothermic Release] and [Blast]",
+			[4] = "Phase 2 : Phase 1 work + GR5 soak [Epocheric Orb] / Don't move when targeted [Delphuric Beam] but do not overlap",
+			[5] = "Phase 3 : Phase 2 work + Interrupt boss's cast of [Ablative Pulse]!",
+			[6] = "Phase 3 : Never explosion [Conflexive Burst] all together. You gave time to healer used Fast/Slow Time Zone",
+			[7] = "Lust on the pull. Any question?",
+		},
+	},
+	["Guldan"] = {
+		[1] = {
+			[1] = "Phase ALL : Stay away from tank! ALWAYS! Tank mark is Orange{동그라미} and Blue{네모}",
+			[2] = "Phase 1 : Don't DIE from [Fel Efflux]! I DON'T UNDERSTAND DIED IN THIS PAHSE!!",
+			[3] = "Phase 2 : Prioritize killing Eye of Guldan!! and spreading when targeted! Don't forgot it!!",
+			[4] = "Phase 2 : You got bonds? just wait 3 friends! Don't kill your friends who are trying help you",
+			[5] = "Phase 3 : Don't pacnic income [Storm of the Destroyer]. That doesn't kill you",
+			[6] = "Phase 3 : Remove the souls when [Well of Souls] for [Black Harvest]. Everybody going to there!!",
+			[7] = "Phase 3 : Check healer's position when income [Black Harvest]. This is so dangerous",
+			[8] = "Phase 3 : [Flames of Sargeras] run away from the group!! THIS IS IMPORTANT",
+			[9] = "Phase 3 : [Flames of Sargeras] run away from the group!! THIS IS REALLY IMPORTANT!!",
+			[10] = "Lust on the pull",
+		},
+		[2] = {
+			[1] = "Phase ALL : Stay away from tank! ALWAYS! Tank mark is Orange{동그라미} and Blue{네모}",
+			[2] = "Phase 1 : Don't DIE from [Fel Efflux]! I DON'T UNDERSTAND DIED IN THIS PAHSE!!",
+			[3] = "Phase 2 : Prioritize killing Eye of Guldan!! and spreading when targeted! Don't forgot it!!",
+			[4] = "Phase 2 : You got bonds? just wait 3 friends! Don't kill your friends who are trying help you",
+			[5] = "Phase 3 : Don't pacnic income [Storm of the Destroyer]. That doesn't kill you",
+			[6] = "Phase 3 : Remove the souls when [Well of Souls] for [Black Harvest]. Everybody going to there!!",
+			[7] = "Phase 3 : Check healer's position when income [Black Harvest]. This is so dangerous",
+			[8] = "Phase 3 : [Flames of Sargeras] run away from the group!! THIS IS IMPORTANT",
+			[9] = "Phase 3 : [Flames of Sargeras] run away from the group!! THIS IS REALLY IMPORTANT!!",
+			[10] = "Lust on the pull",
+		},
+		[3] = {
+			[1] = "Phase ALL : Stay away from tank! ALWAYS! Tank mark is Orange{동그라미} and Blue{네모}",
+			[2] = "Phase 1 : Don't DIE from [Fel Efflux]! I DON'T UNDERSTAND DIED IN THIS PAHSE!!",
+			[3] = "Phase 2 : Prioritize killing Eye of Guldan!! and spreading when targeted! Don't forgot it!!",
+			[4] = "Phase 2 : You got bonds? just wait 3 friends! Don't kill your friends who are trying help you",
+			[5] = "Phase 3 : Don't pacnic income [Storm of the Destroyer]. That doesn't kill you",
+			[6] = "Phase 3 : Remove the souls when [Well of Souls] for [Black Harvest]. Everybody going to there!!",
+			[7] = "Phase 3 : Check healer's position when income [Black Harvest]. This is so dangerous",
+			[8] = "Phase 3 : [Flames of Sargeras] run away from the group!! THIS IS IMPORTANT",
+			[9] = "Phase 3 : [Flames of Sargeras] run away from the group!! THIS IS REALLY IMPORTANT!!",
+			[10] = "Lust on the pull",
+		},
 	},
 }
