@@ -155,6 +155,8 @@ mainFrame:SetPoint(position_Align, UIParent, position_REF, position_X, position_
 
 local btnSAY = CreateButton(mainFrame, 25, 22, 'TOPLEFT', mainFrame, 'TOPRIGHT', 1, 0, "S")
 btnSAY:SetScript("OnClick", function() chatType = "SAY" end)
+local btnPARTY = CreateButton(mainFrame, 25, 22, 'TOP', btnSAY, 'BOTTOM', 0, 1, "P")
+btnPARTY:SetScript("OnClick", function() chatType = "PARTY" end)
 local btnINSTANCE = CreateButton(mainFrame, 25, 22, 'TOP', btnSAY, 'BOTTOM', 0, 1, "I")
 btnINSTANCE:SetScript("OnClick", function() chatType = "INSTANCE_CHAT" end)
 local btnRAID = CreateButton(mainFrame, 25, 22, 'TOP', btnINSTANCE, 'BOTTOM', 0, 1, "R")
