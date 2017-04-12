@@ -153,6 +153,13 @@ local mainFrame = CreateFrame('Frame', 'KBJGroupOrder', UIParent)
 mainFrame:SetSize(100, 178)
 mainFrame:SetPoint(position_Align, UIParent, position_REF, position_X, position_Y)
 
+local btnSAY = CreateButton(mainFrame, 25, 22, 'TOPLEFT', mainFrame, 'TOPRIGHT', 1, 0, "S")
+btnSAY:SetScript("OnClick", function() chatType = "SAY" end)
+local btnINSTANCE = CreateButton(mainFrame, 25, 22, 'TOP', btnSAY, 'BOTTOM', 0, 1, "I")
+btnINSTANCE:SetScript("OnClick", function() chatType = "INSTANCE_CHAT" end)
+local btnRAID = CreateButton(mainFrame, 25, 22, 'TOP', btnINSTANCE, 'BOTTOM', 0, 1, "R")
+btnRAID:SetScript("OnClick", function() chatType = "RAID_WARNING" end)
+
 local btnPullA = CreateButton(mainFrame, 48, 22, 'TOPLEFT', mainFrame, 'TOPLEFT', 0, 0, "3초 풀")
 btnPullA:SetScript("OnClick", function() SetPulling(3) end)
 local btnPullB = CreateButton(mainFrame, 25, 22, 'LEFT', btnPullA, 'RIGHT', 1, 0, "5")
