@@ -6,7 +6,7 @@ local position_Y = 46
 local position_Align = 'TOP'
 
 local chatRepeat = 1 -- 알림챗 반복 횟수
-local chatType = "SAY" -- 말하기 = SAY / 외치기 = YELL / 파티 = PARTY / 레이드 = RAID / 인스턴스 = INSTANCE
+local chatType = "SAY" -- 말하기 = SAY / 외치기 = YELL / 파티 = PARTY / 레이드 = RAID / 인스턴스 = INSTANCE_CHAT / RAID_WARNING
 
 -- Vars ---------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
@@ -242,7 +242,7 @@ selectLegionNH_Skorpyron_BriefN:SetScript("OnClick", function() OutputBrief("Sko
 local selectLegionNH_Skorpyron_BriefH = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefN, 'BOTTOM', 0, -2, "Brief H")
 selectLegionNH_Skorpyron_BriefH:SetScript("OnClick", function() OutputBrief("Skorpyron", 2) end)
 local selectLegionNH_Skorpyron_BriefM = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefH, 'BOTTOM', 0, -2, "Brief M")
-selectLegionNH_Skorpyron_BriefH:SetScript("OnClick", function() OutputBrief("Skorpyron", 3) end)
+selectLegionNH_Skorpyron_BriefM:SetScript("OnClick", function() OutputBrief("Skorpyron", 3) end)
 
 local selectLegionNH_Skorpyron_Blast = CreateButton(selectLegionNH_Skorpyron, 80, 22, 'TOP', selectLegionNH_Skorpyron_BriefM, 'BOTTOM', 0, -8, "Blast")
 selectLegionNH_Skorpyron_Blast:SetScript("OnClick", function() SendChatMessage("Avoid |cff71d5ff|Hspell:204483:0|h[Focused Blast]|h|r!", chatType) end)
@@ -267,13 +267,13 @@ local selectLegionNH_Chronomatic_orderHealC = CreateInput(selectLegionNH_Chronom
 local selectLegionNH_Chronomatic_orderHealD = CreateInput(selectLegionNH_Chronomatic, 71, 22, 'TOP', selectLegionNH_Chronomatic_orderHealC, 'BOTTOM', 0, -2, "4rd")
 
 local selectLegionNH_Chronomatic_orderActHealA = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealA, 'LEFT', -9, 0, "Act")
-selectLegionNH_Chronomatic_orderActHealA:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealA:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Chronomatic_orderActHealA:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealA:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 local selectLegionNH_Chronomatic_orderActHealB = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealB, 'LEFT', -9, 0, "Act")
-selectLegionNH_Chronomatic_orderActHealB:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealB:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Chronomatic_orderActHealB:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealB:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 local selectLegionNH_Chronomatic_orderActHealC = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealC, 'LEFT', -9, 0, "Act")
-selectLegionNH_Chronomatic_orderActHealC:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealC:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Chronomatic_orderActHealC:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealC:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 local selectLegionNH_Chronomatic_orderActHealD = CreateButton(selectLegionNH_Chronomatic, 40, 22, 'RIGHT', selectLegionNH_Chronomatic_orderHealD, 'LEFT', -9, 0, "Act")
-selectLegionNH_Chronomatic_orderActHealD:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealD:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Chronomatic_orderActHealD:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Chronomatic_orderHealD:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 
 local selectLegionNH_Chronomatic_orderBriefHealA = CreateButton(selectLegionNH_Chronomatic, 22, 22, 'RIGHT', selectLegionNH_Chronomatic_orderActHealA, 'LEFT', -1, 0, "B")
 selectLegionNH_Chronomatic_orderBriefHealA:SetScript("OnClick", function() SendChatMessage("1st Healing CD : "..selectLegionNH_Chronomatic_orderHealA:GetText(), chatType) end) 
@@ -297,7 +297,7 @@ selectLegionNH_Trilliax:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 local selectLegionNH_Trilliax_BriefN = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOP', selectLegionNH_Trilliax, 'TOP', 0, 0, "Brief N")
 selectLegionNH_Trilliax_BriefN:SetScript("OnClick", function() OutputBrief("Trilliax", 1) end)
 local selectLegionNH_Trilliax_BriefH = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOP', selectLegionNH_Trilliax_BriefN, 'BOTTOM', 0, -2, "Brief H")
-selectLegionNH_Chronomatic_BriefH:SetScript("OnClick", function() OutputBrief("Trilliax", 2) end)
+selectLegionNH_Trilliax_BriefH:SetScript("OnClick", function() OutputBrief("Trilliax", 2) end)
 local selectLegionNH_Trilliax_BriefM = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOP', selectLegionNH_Trilliax_BriefH, 'BOTTOM', 0, -2, "Brief M")
 selectLegionNH_Trilliax_BriefM:SetScript("OnClick", function() OutputBrief("Trilliax", 3) end)
 
@@ -306,7 +306,7 @@ selectLegionNH_Trilliax_Cake:SetScript("OnClick", function() SendChatMessage("EA
 local selectLegionNH_Trilliax_Soak = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOPLEFT', selectLegionNH_Trilliax_Cake, 'BOTTOMLEFT', 0, -2, "SOAK")
 selectLegionNH_Trilliax_Soak:SetScript("OnClick", function() SendChatMessage("Check and Soak the Scrubber!", chatType) end)
 local selectLegionNH_Trilliax_Anni = CreateButton(selectLegionNH_Trilliax, 80, 22, 'TOPLEFT', selectLegionNH_Trilliax_Soak, 'BOTTOMLEFT', 0, -8, "Annihilation")
-selectLegionNH_Trilliax_Anni:SetScript("OnClick", function() SendChatMessage("Income [Annihilation]. If u get Link, Move to the left-side of the boss", chatType) end)
+selectLegionNH_Trilliax_Anni:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:207630:0|h[Annihilation]|h|r. If u get Link, Move to the left-side of the boss", chatType) end)
 
 -- Spellblade
 local selectLegionNH_Spellblade = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Spellblade', UIParent)
@@ -316,16 +316,16 @@ selectLegionNH_Spellblade:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 local selectLegionNH_Spellblade_BriefN = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade, 'TOP', 0, 0, "Brief N")
 selectLegionNH_Spellblade_BriefN:SetScript("OnClick", function() OutputBrief("Spellblade", 1) end)
 local selectLegionNH_Spellblade_BriefH = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_BriefN, 'BOTTOM', 0, -2, "Brief H")
-selectLegionNH_Spellblade_BriefH:SetScript("OnClick", function() OutputBrief("Spellblade", 1) end)
+selectLegionNH_Spellblade_BriefH:SetScript("OnClick", function() OutputBrief("Spellblade", 2) end)
 local selectLegionNH_Spellblade_BriefM = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_BriefH, 'BOTTOM', 0, -2, "Brief M")
 selectLegionNH_Spellblade_BriefM:SetScript("OnClick", function() OutputBrief("Spellblade", 3) end)
 
 local selectLegionNH_Spellblade_frostOut = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_BriefM, 'BOTTOM', 0, -8, "1:Out!")
-selectLegionNH_Spellblade_frostOut:SetScript("OnClick", function() SendChatMessage("Move to the rainbow worldmark when got [Mark of Frost]", chatType) end)
+selectLegionNH_Spellblade_frostOut:SetScript("OnClick", function() SendChatMessage("Move to the rainbow worldmark when got |cff71d5ff|Hspell:212587:0|h[Mark of Frost]|h|r", chatType) end)
 local selectLegionNH_Spellblade_fireApart = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_frostOut, 'BOTTOM', 0, -8, "2:Apart")
 selectLegionNH_Spellblade_fireApart:SetScript("OnClick", function() SendChatMessage("Fire Spawnner, 8 yards apart!", chatType) end)
 local selectLegionNH_Spellblade_fireKick = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_fireApart, 'BOTTOM', 0, -2, "2:Kick!")
-selectLegionNH_Spellblade_fireKick:SetScript("OnClick", function() SendChatMessage("Kill adds and interrupt the [Pyroblast]", chatType) end)
+selectLegionNH_Spellblade_fireKick:SetScript("OnClick", function() SendChatMessage("Kill adds and interrupt the |cff71d5ff|Hspell:213281:0|h[Pyroblast]|h|r", chatType) end)
 local selectLegionNH_Spellblade_arcaneStack = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_fireKick, 'BOTTOM', 0, -8, "3:Stack")
 selectLegionNH_Spellblade_arcaneStack:SetScript("OnClick", function() SendChatMessage("Stack on Moon{달} worldmark", chatType) end)
 local selectLegionNH_Spellblade_arcaneDCDs = CreateButton(selectLegionNH_Spellblade, 80, 22, 'TOP', selectLegionNH_Spellblade_arcaneStack, 'BOTTOM', 0, -2, "3:DCDs")
@@ -346,13 +346,13 @@ selectLegionNH_Tichondrius_BriefM:SetScript("OnClick", function() OutputBrief("T
 local selectLegionNH_Tichondrius_movePlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_BriefM, 'BOTTOM', 0, -8, "Move |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_3:12:12|t")
 selectLegionNH_Tichondrius_movePlague:SetScript("OnClick", function() SendChatMessage("Plague on purple side", chatType) end)
 local selectLegionNH_Tichondrius_spreadPlague = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_movePlague, 'BOTTOM', 0, -2, "Inc Bat")
-selectLegionNH_Tichondrius_spreadPlague:SetScript("OnClick", function() SendChatMessage("Income [Seeker Swarm]! Spread plague group! NEVER DUMP BRAND THIS TIME!!", chatType) end)
+selectLegionNH_Tichondrius_spreadPlague:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:213238:0|h[Seeker Swarm]|h|r! Spread plague group! NEVER DUMP BRAND THIS TIME!!", chatType) end)
 local selectLegionNH_Tichondrius_killAdd = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_spreadPlague, 'BOTTOM', 0, -2, "Kill Add")
 selectLegionNH_Tichondrius_killAdd:SetScript("OnClick", function() SendChatMessage("Kill adds quickly!!", chatType) end)
 local selectLegionNH_Tichondrius_dumpBrand = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_killAdd, 'BOTTOM', 0, -8, "Dump Brand")
 selectLegionNH_Tichondrius_dumpBrand:SetScript("OnClick", function() SendChatMessage("Brand guy, Dump on group", chatType) end)
 local selectLegionNH_Tichondrius_stackCenter = CreateButton(selectLegionNH_Tichondrius, 80, 22, 'TOP', selectLegionNH_Tichondrius_dumpBrand, 'BOTTOM', 0, -8, "Night")
-selectLegionNH_Tichondrius_stackCenter:SetScript("OnClick", function() SendChatMessage("Stack on center but dodge [Carrion Nightmare]", chatType) end)
+selectLegionNH_Tichondrius_stackCenter:SetScript("OnClick", function() SendChatMessage("Stack on center but dodge |cff71d5ff|Hspell:215988:0|h[Carrion Nightmare]|h|r", chatType) end)
 
 -- Krosus
 local selectLegionNH_Krosus = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Krosus', UIParent)
@@ -362,7 +362,7 @@ selectLegionNH_Krosus:SetPoint('TOPRIGHT', mainFrame, 'TOPLEFT', -4, 0)
 local selectLegionNH_Krosus_BriefN = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus, 'TOP', 0, 0, "Brief N")
 selectLegionNH_Krosus_BriefN:SetScript("OnClick", function() OutputBrief("Krosus", 1) end)
 local selectLegionNH_Krosus_BriefH = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_BriefN, 'BOTTOM', 0, -2, "Brief H")
-selectLegionNH_Krosus_BriefH:SetScript("OnClick", function() OutputBrief("Krosus", 1) end)
+selectLegionNH_Krosus_BriefH:SetScript("OnClick", function() OutputBrief("Krosus", 2) end)
 local selectLegionNH_Krosus_BriefM = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_BriefH, 'BOTTOM', 0, -2, "Brief M")
 selectLegionNH_Krosus_BriefM:SetScript("OnClick", function() OutputBrief("Krosus", 3) end)
 
@@ -374,9 +374,9 @@ selectLegionNH_Krosus_moveRIGHT:SetScript("OnClick", function() SendChatMessage(
 local selectLegionNH_Krosus_breakBridge = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOPLEFT', selectLegionNH_Krosus_moveLEFT, 'BOTTOMLEFT', 0, -8, "Bridge")
 selectLegionNH_Krosus_breakBridge:SetScript("OnClick", function() SendChatMessage("Break the Bridge! MOVE BACK!", chatType) end)
 local selectLegionNH_Krosus_incOrb = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_breakBridge, 'BOTTOM', 0, -2, "Orb")
-selectLegionNH_Krosus_incOrb:SetScript("OnClick", function() SendChatMessage("Income [Orb of Destruction]! Check yourself!", chatType) end)
+selectLegionNH_Krosus_incOrb:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:205361:0|h[Orb of Destruction]|h|r! Check yourself!", chatType) end)
 local selectLegionNH_Krosus_incPitch = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_incOrb, 'BOTTOM', 0, -2, "Pitch")
-selectLegionNH_Krosus_incPitch:SetScript("OnClick", function() SendChatMessage("Income [Burning Pitch]! Check your position!", chatType) end)
+selectLegionNH_Krosus_incPitch:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:205420:0|h[Burning Pitch]|h|r! Check your position!", chatType) end)
 local selectLegionNH_Krosus_killAdd = CreateButton(selectLegionNH_Krosus, 80, 22, 'TOP', selectLegionNH_Krosus_incPitch, 'BOTTOM', 0, -2, "Kill Adds")
 selectLegionNH_Krosus_killAdd:SetScript("OnClick", function() SendChatMessage("Kill Adds! Quickly! but be careful if income beam!", chatType) end)
 
@@ -398,9 +398,9 @@ selectLegionNH_Botanist_orderActDispel:SetScript("OnClick", function() SendChatM
 local selectLegionNH_Botanist_orderBriefDispel = CreateButton(selectLegionNH_Botanist, 22, 22, 'RIGHT', selectLegionNH_Botanist_orderActDispel, 'LEFT', -1, 0, "B")
 selectLegionNH_Botanist_orderBriefDispel:SetScript("OnClick", function() SendChatMessage("Dispel Lasher Healer : "..selectLegionNH_Botanist_orderDispel:GetText(), chatType) end) 
 local selectLegionNH_Botanist_spreadLasher = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOP', selectLegionNH_Botanist_orderDispel, 'BOTTOM', -3, -2, "Lasher")
-selectLegionNH_Botanist_spreadLasher:SetScript("OnClick", function() SendChatMessage("Spreading form target of [Parasitic Fetter]", chatType) end)
+selectLegionNH_Botanist_spreadLasher:SetScript("OnClick", function() SendChatMessage("Spreading form target of |cff71d5ff|Hspell:218424:0|h[Parasitic Fetter]|h|r", chatType) end)
 local selectLegionNH_Botanist_killLasher = CreateButton(selectLegionNH_Botanist, 40, 22, 'RIGHT', selectLegionNH_Botanist_spreadLasher, 'LEFT', -1, 0, "Kill")
-selectLegionNH_Botanist_killLasher:SetScript("OnClick", function() SendChatMessage("Kill [Parasitic Lasher]! Quickly!", chatType) end)
+selectLegionNH_Botanist_killLasher:SetScript("OnClick", function() SendChatMessage("Kill 'Parasitic Lasher' ! Quickly!", chatType) end)
 
 local selectLegionNH_Botanist_orderSphere = CreateInput(selectLegionNH_Botanist, 71, 22, 'TOP', selectLegionNH_Botanist_spreadLasher, 'BOTTOM', 3, -8, "Sphere")
 local selectLegionNH_Botanist_orderActSphere = CreateButton(selectLegionNH_Botanist, 40, 22, 'RIGHT', selectLegionNH_Botanist_orderSphere, 'LEFT', -9, 0, "Act")
@@ -415,7 +415,7 @@ local selectLegionNH_Botanist_moveRed = CreateButton(selectLegionNH_Botanist, 26
 selectLegionNH_Botanist_moveRed:SetScript("OnClick", function() SendChatMessage("Tank, Move to the Red{가위표}", chatType) end)
 
 local selectLegionNH_Botanist_callNight = CreateButton(selectLegionNH_Botanist, 80, 22, 'TOPLEFT', selectLegionNH_Botanist_moveOrange, 'BOTTOMLEFT', 0, -8, "Night")
-selectLegionNH_Botanist_callNight:SetScript("OnClick", function() SendChatMessage("Stack on has [Call of Night] player if you are unmarked", chatType) end)
+selectLegionNH_Botanist_callNight:SetScript("OnClick", function() SendChatMessage("Stack on has |cff71d5ff|Hspell:218807:0|h[Call of Night]|h|r player if you are unmarked", chatType) end)
 
 -- StarAugur
 local selectLegionNH_StarAugur = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_StarAugur', UIParent)
@@ -436,7 +436,7 @@ selectLegionNH_StarAugur_spreadNow:SetScript("OnClick", function() SendChatMessa
 local selectLegionNH_StarAugur_killAdd = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_spreadNow, 'BOTTOM', 0, -2, "Kill Add")
 selectLegionNH_StarAugur_killAdd:SetScript("OnClick", function() SendChatMessage("Kill Big Add! Quickly!", chatType) end)
 local selectLegionNH_StarAugur_turnAdd = CreateButton(selectLegionNH_StarAugur, 80, 22, 'TOP', selectLegionNH_StarAugur_killAdd, 'BOTTOM', 0, -2, "Witness")
-selectLegionNH_StarAugur_turnAdd:SetScript("OnClick", function() SendChatMessage("Income [Witness the Void]. Turn away from the big add!", chatType) end)
+selectLegionNH_StarAugur_turnAdd:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:207720:0|h[Witness the Void]|h|r. Turn away from the big add!", chatType) end)
 
 -- Elisande
 local selectLegionNH_Elisande = CreateFrame('Frame', 'KBJGroupOrder_LegionNH_Elisande', UIParent)
@@ -451,14 +451,14 @@ local selectLegionNH_Elisande_BriefM = CreateButton(selectLegionNH_Elisande, 80,
 selectLegionNH_Elisande_BriefM:SetScript("OnClick", function() OutputBrief("Elisande", 3) end)
 
 local selectLegionNH_Elisande_dontMove = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_BriefM, 'BOTTOM', 0, -8, "No Move")
-selectLegionNH_Elisande_dontMove:SetScript("OnClick", function() SendChatMessage("Don't move when targeted [Delphuric Beam]", chatType) end)
+selectLegionNH_Elisande_dontMove:SetScript("OnClick", function() SendChatMessage("Don't move when targeted |cff71d5ff|Hspell:214278:0|h[Delphuric Beam]|h|r", chatType) end)
 local selectLegionNH_Elisande_soak = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_dontMove, 'BOTTOM', 0, -2, "Soak")
-selectLegionNH_Elisande_soak:SetScript("OnClick", function() SendChatMessage("GR5 soak [Epocheric Orb]!!", chatType) end)
+selectLegionNH_Elisande_soak:SetScript("OnClick", function() SendChatMessage("GR5 soak |cff71d5ff|Hspell:210022:0|h[Epocheric Orb]|h|r!!", chatType) end)
 local selectLegionNH_Elisande_focusSkull = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_soak, 'BOTTOM', 0, -8, "Focus |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_8:12:12|t")
 selectLegionNH_Elisande_focusSkull:SetScript("OnClick", function() SendChatMessage("FOCUS SKULL{해골}!!!!", chatType) end)
 
 local selectLegionNH_Elisande_moveAdd = CreateButton(selectLegionNH_Elisande, 80, 22, 'TOP', selectLegionNH_Elisande_focusSkull, 'BOTTOM', 0, -8, "Move Add")
-selectLegionNH_Elisande_moveAdd:SetScript("OnClick", function() SendChatMessage("Tank, Move to the [Recursive Elementals]!!", chatType) end)
+selectLegionNH_Elisande_moveAdd:SetScript("OnClick", function() SendChatMessage("Tank, Move to the 'Recursive Elementals' !!", chatType) end)
 local selectLegionNH_Elisande_doubleRingA = CreateButton(selectLegionNH_Elisande, 39, 22, 'TOPLEFT', selectLegionNH_Elisande_moveAdd, 'BOTTOMLEFT', 0, -2, "1/2")
 selectLegionNH_Elisande_doubleRingA:SetScript("OnClick", function() SendChatMessage("1st of Double Ring", chatType) end)
 local selectLegionNH_Elisande_doubleRingB = CreateButton(selectLegionNH_Elisande, 39, 22, 'LEFT', selectLegionNH_Elisande_doubleRingA, 'RIGHT', 2, 0, "2/2")
@@ -479,7 +479,7 @@ local selectLegionNH_Guldan_BriefM = CreateButton(selectLegionNH_Guldan, 80, 22,
 selectLegionNH_Guldan_BriefM:SetScript("OnClick", function() OutputBrief("Guldan", 3) end)
 
 local selectLegionNH_Guldan_Efflux = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_BriefM, 'BOTTOM', 0, -8, "Efflux")
-selectLegionNH_Guldan_Efflux:SetScript("OnClick", function() SendChatMessage("Income [Fel Efflux]!!", chatType) end)
+selectLegionNH_Guldan_Efflux:SetScript("OnClick", function() SendChatMessage("Income |cff71d5ff|Hspell:206514:0|h[Fel Efflux]|h|r!!", chatType) end)
 
 local selectLegionNH_Guldan_orderInterruptA = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_Efflux, 'BOTTOM', 3, -8, "ranged")
 local selectLegionNH_Guldan_orderInterruptB = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderInterruptA, 'BOTTOM', 0, -2, "melee")
@@ -512,22 +512,22 @@ local selectLegionNH_Guldan_orderHealC = CreateInput(selectLegionNH_Guldan, 71, 
 local selectLegionNH_Guldan_orderHealD = CreateInput(selectLegionNH_Guldan, 71, 22, 'TOP', selectLegionNH_Guldan_orderHealC, 'BOTTOM', 0, -2, "4rd")
 
 local selectLegionNH_Guldan_orderActHealA = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealA, 'LEFT', -9, 0, "Act")
-selectLegionNH_Guldan_orderActHealA:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealA:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Guldan_orderActHealA:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealA:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 local selectLegionNH_Guldan_orderActHealB = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealB, 'LEFT', -9, 0, "Act")
-selectLegionNH_Guldan_orderActHealB:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealB:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Guldan_orderActHealB:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealB:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 local selectLegionNH_Guldan_orderActHealC = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealC, 'LEFT', -9, 0, "Act")
-selectLegionNH_Guldan_orderActHealC:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealC:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Guldan_orderActHealC:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealC:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 local selectLegionNH_Guldan_orderActHealD = CreateButton(selectLegionNH_Guldan, 40, 22, 'RIGHT', selectLegionNH_Guldan_orderHealD, 'LEFT', -9, 0, "Act")
-selectLegionNH_Guldan_orderActHealD:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealD:GetText().." UP plz!!!!", chatType) end) 
+selectLegionNH_Guldan_orderActHealD:SetScript("OnClick", function() SendChatMessage(selectLegionNH_Guldan_orderHealD:GetText()..", Cooldowns UP plz!!!!", chatType) end) 
 
 local selectLegionNH_Guldan_orderBriefHealA = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealA, 'LEFT', -1, 0, "B")
-selectLegionNH_Guldan_orderBriefHealA:SetScript("OnClick", function() SendChatMessage("1st Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealA:GetText(), chatType) end) 
+selectLegionNH_Guldan_orderBriefHealA:SetScript("OnClick", function() SendChatMessage("1st Healing CD when |cff71d5ff|Hspell:208806:0|h[Black Harvest]|h|r : "..selectLegionNH_Guldan_orderHealA:GetText(), chatType) end) 
 local selectLegionNH_Guldan_orderBriefHealB = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealB, 'LEFT', -1, 0, "B")
-selectLegionNH_Guldan_orderBriefHealB:SetScript("OnClick", function() SendChatMessage("2nd Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealB:GetText(), chatType) end) 
+selectLegionNH_Guldan_orderBriefHealB:SetScript("OnClick", function() SendChatMessage("2nd Healing CD when |cff71d5ff|Hspell:208806:0|h[Black Harvest]|h|r : "..selectLegionNH_Guldan_orderHealB:GetText(), chatType) end) 
 local selectLegionNH_Guldan_orderBriefHealC = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealC, 'LEFT', -1, 0, "B")
-selectLegionNH_Guldan_orderBriefHealC:SetScript("OnClick", function() SendChatMessage("3rd Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealC:GetText(), chatType) end) 
+selectLegionNH_Guldan_orderBriefHealC:SetScript("OnClick", function() SendChatMessage("3rd Healing CD when |cff71d5ff|Hspell:208806:0|h[Black Harvest]|h|r : "..selectLegionNH_Guldan_orderHealC:GetText(), chatType) end) 
 local selectLegionNH_Guldan_orderBriefHealD = CreateButton(selectLegionNH_Guldan, 22, 22, 'RIGHT', selectLegionNH_Guldan_orderActHealD, 'LEFT', -1, 0, "B")
-selectLegionNH_Guldan_orderBriefHealD:SetScript("OnClick", function() SendChatMessage("4rd Healing CD when [Black Harvest] : "..selectLegionNH_Guldan_orderHealD:GetText(), chatType) end) 
+selectLegionNH_Guldan_orderBriefHealD:SetScript("OnClick", function() SendChatMessage("4rd Healing CD when |cff71d5ff|Hspell:208806:0|h[Black Harvest]|h|r : "..selectLegionNH_Guldan_orderHealD:GetText(), chatType) end) 
 
 local selectLegionNH_Guldan_stack = CreateButton(selectLegionNH_Guldan, 80, 22, 'TOP', selectLegionNH_Guldan_orderHealD, 'BOTTOM', -3, -2, "Stack |TInterface\\TargetingFrame\\UI-RaidTargetingIcon_5:12:12|t")
 selectLegionNH_Guldan_stack:SetScript("OnClick", function() SendChatMessage("Stack on Moon{달} for healer's cooldowns spell", chatType) end)
