@@ -111,7 +111,7 @@ GroupOrderLegionNH = {
 	["Tichondrius"] = {
 		[1] = {
 			[1] = "|cff66bbff|Hjournal:2:13508:15|h[Carrion Plague]|h|r on Purple{diamond} side / clean on Blue{square} side",
-			[2] = "Blood is keeping cleave at Red{cross}. Kill it quickly!"
+			[2] = "Blood is keeping cleave at Red{cross}. Kill it quickly!",
 			[3] = "Dump |cff66bbff|Hjournal:2:13510:15|h[Brand of Argus]|h|r at 1 by 1",
 			[4] = "Lust on end 1st Night. Any question?",
 		},
