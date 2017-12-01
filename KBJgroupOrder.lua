@@ -7,6 +7,7 @@ local position_Align = 'TOP'
 
 local chatRepeat = 1 -- 알림챗 반복 횟수
 local chatType = "SAY" -- 말하기 = SAY / 외치기 = YELL / 파티 = PARTY / 레이드 = RAID / 인스턴스 = INSTANCE_CHAT / RAID_WARNING
+-- rt1 별(노랑) / rt2 동글(오렌지) / rt3 다잉(퍼플) / rt4 역삼(그린) / rt5 문(문) / rt6 네모(블루) / rt7 크로스(엑스) / rt8 해골(해골)
 
 -- Vars ---------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------
@@ -178,12 +179,12 @@ btnWaitHereMark:SetText("|TInterface\\TargetingFrame\\UI-RaidTargetingIcon_6:12:
 btnWaitHereMark:SetAttribute("type", "macro")
 btnWaitHereMark:SetAttribute("macrotext", "/wm 1")
 local btnWaitHere = CreateButton(mainFrame, 77, 22, 'LEFT', btnWaitHereMark, 'RIGHT', 1, 0, "에서 기다려")
-btnWaitHere:SetScript("OnClick", function() SendChatMessage("Wait on Blue{네모} for LOS", chatType) end)
+btnWaitHere:SetScript("OnClick", function() SendChatMessage("Wait on Blue{rt6} for LOS", chatType) end)
 
 local btnMove = CreateButton(mainFrame, 100, 22, 'TOPLEFT', btnWaitHereMark, 'BOTTOMLEFT', 0, -2, "오렌지를 따라와")
-btnMove:SetScript("OnClick", function() SendChatMessage("Follow Orange{동그라미}", chatType) end)
+btnMove:SetScript("OnClick", function() SendChatMessage("Follow Orange{rt2}", chatType) end)
 local btnStack = CreateButton(mainFrame, 100, 22, 'TOP', btnMove, 'BOTTOM', 0, -2, "오렌지에게 모여")
-btnStack:SetScript("OnClick", function() SendChatMessage("Stack on Orange{동그라미}", chatType) end)
+btnStack:SetScript("OnClick", function() SendChatMessage("Stack on Orange{rt2}", chatType) end)
 local btnBack = CreateButton(mainFrame, 100, 22, 'TOP', btnStack, 'BOTTOM', 0, -2, "물러서")
 btnBack:SetScript("OnClick", function() SendChatMessage("Stay Back!!", chatType) end)
 local btnSelect = CreateButton(mainFrame, 100, 22, 'TOP', btnBack, 'BOTTOM', 0, -8, "브리핑 세트")
