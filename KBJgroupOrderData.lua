@@ -13,7 +13,7 @@ GroupOrderTypeData = {
 		},
 		[2] = {
 			name = "2 Pack",
-			msg = "Pulling 2 Pack!",
+			msg = "Pulling 2 Pack! Ready to use CDs",
 		},
 		[3] = {
 			name = "Big Pull",
@@ -205,7 +205,7 @@ GroupOrderLegionNH = {
 			[4] = "Phase 2 : Everybody spread / Get away from the group when have debuff |cff66bbff|Hjournal:2:13051:15|h[Felflame]|h|r",
 			[5] = "Phase 2 : Get away from boss during |cff66bbff|Hjournal:2:13052:15|h[Fel Nova]|h|r",
 			[6] = "Phase 3 : Prioritize killing 1st big add and Just focus boss killed that",
-			[7] = "Phase 3 : Turn away from the big add when it casts |cff66bbff|Hjournal:2:13059:15|h[Witness the Void]|h|r everytime",			
+			[7] = "Phase 3 : Turn away from the big add when it casts |cff66bbff|Hjournal:2:13059:15|h[Witness the Void]|h|r everytime",
 			[8] = "Lust on pop big add when 3rd phase. Any question?",
 		},
 	},
