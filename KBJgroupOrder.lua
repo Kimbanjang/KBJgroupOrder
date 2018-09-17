@@ -17,13 +17,13 @@ local GroupOrder_Type = 0
 -----------------------------------------------------------------------------------------
 function SetPulling(time)
     MacroEditBox:GetScript('OnEvent')(MacroEditBox, 'EXECUTE_CHAT_LINE', "/pull "..time)
-    SendChatMessage("Pulling in "..time.."s!", chatType)
+    SendChatMessage("Pull in "..time.."s!", chatType)
     C_Timer.NewTicker(1, (function()
         if time > 1 then
             time = time - 1
             SendChatMessage(time.."s!", chatType)
         else
-            SendChatMessage("Pulling!!", chatType)
+            SendChatMessage("Pull Now!!", chatType)
         end
     end), time)
 end
