@@ -1,6 +1,6 @@
-## Interface: 80100
+## Interface: 80200
 ## Title: KBJ Group Order
-## Version: 8.1.0.1
+## Version: 8.2.0.1
 ## Author: Kimbanjang
 ## Notes: Create Order Button for Group Control
 ## SavedVariables:
